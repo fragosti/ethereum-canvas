@@ -5,7 +5,6 @@ import { colors } from '../style/utils';
 
 export const Title = styled.h1`
   color: ${colors.gray[9]};
-  font-size: ${props => modularScale(props.size)};
+  font-size: ${props => props.size ? modularScale(props.size) : '44px'};
   display: inline-block;
-  vertical-align: top;
 `

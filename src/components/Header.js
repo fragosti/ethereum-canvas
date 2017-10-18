@@ -18,5 +18,5 @@ const Header = ({className}) => (
 )
 
 export default styled(Header)`
-  border-bottom: 2px solid ${colors.gray[3]};
+  border-bottom: 1px solid ${colors.gray[3]};
 `;
