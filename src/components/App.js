@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { modularScale } from 'polished';
 // import SimpleStorageContract from '../../build/contracts/SimpleStorage.json';
 // import getWeb3 from '../utils/getWeb3';
+import { Flex, Box } from 'grid-styled';
 
+import { colors } from '../style/utils';
 import Header from './Header';
+import Canvas from './Canvas';
+
+const MainFlex = Flex.extend`
+  background-color: ${colors.grayBackground};
+`;
 
 class App extends Component {
 
@@ -58,9 +66,14 @@ class App extends Component {
 
   render() {
     return (
-      <main> 
+      <div> 
         <Header/>
-      </main>
+        <MainFlex justify='center' is='main'> 
+          <Box is='section' m={modularScale(1)}>
+            <Canvas/>
+          </Box>
+        </MainFlex>
+      </div>
     );
   }
 }

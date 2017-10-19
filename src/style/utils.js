@@ -14,7 +14,12 @@ export const viewPort = {
 }
 
 export const colors = {
-  gray: ['#f8f9f9', '#ebedee', '#dee1e3', '#cfd3d6', '#bec4c8', '#acb4b9', '#97a1a7', '#7f8a93', '#5f6e78', '#374047'],
+  white: '#fff',
+  grayBorder: '#e8e8e8',
+  grayBackground: '#f9f9f9',
+  grayText: '#999',
+  grayAction: '#ebebeb',
+  black: '#374047',
   blue: '#61A7F8',
   orange: '#e65142',
 }

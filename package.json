@@ -51,11 +51,13 @@
   "dependencies": {
     "dotenv": "^2.0.0",
     "grid-styled": "^2.0.0-11",
+    "konva": "^1.7.2",
     "minireset.css": "0.0.3",
     "polished": "^1.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-feather": "^1.0.7",
+    "react-konva": "^1.1.5",
     "styled-components": "^2.2.1"
   },
   "scripts": {
