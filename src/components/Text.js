@@ -3,8 +3,19 @@ import { modularScale } from 'polished';
 
 import { colors } from '../style/utils';
 
-export const Title = styled.h1`
+export const Description = styled.p`
+  color: ${colors.grayText};
+  font-size: ${props => props.size !== undefined ? modularScale(props.size - 1) : '24px'};
+`
+
+export const Title = styled.p`
   color: ${colors.black};
-  font-size: ${props => props.size ? modularScale(props.size) : '44px'};
+  font-weight: 700;
+  font-size: ${props => props.size !== undefined ? modularScale(props.size - 1) : '30px'};
+`
+
+export const Heading = styled.h1`
+  color: ${colors.black};
+  font-size: ${props => props.size !== undefined ? modularScale(props.size) : '44px'};
   display: inline-block;
 `

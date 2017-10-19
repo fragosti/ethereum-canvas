@@ -7,6 +7,7 @@ import { Flex, Box } from 'grid-styled';
 import { colors } from '../style/utils';
 import Header from './Header';
 import Canvas from './Canvas';
+import Footer from './Footer';
 
 const MainFlex = Flex.extend`
   background-color: ${colors.grayBackground};
@@ -73,6 +74,7 @@ class App extends Component {
             <Canvas/>
           </Box>
         </MainFlex>
+        <Footer/>
       </div>
     );
   }

@@ -6,17 +6,15 @@ import Logo from './Logo';
 import { colors } from '../style/utils';
 
 
-const Container = styled.header`
-  padding: ${modularScale(2)}
-  margin: 0px auto;
-`
-
 const Header = ({ className }) => (
-  <Container className={className}>
+  <header className={className}>
     <Logo/>
-  </Container>
+  </header>
 )
 
 export default styled(Header)`
   border-bottom: 1px solid ${colors.grayBorder};
+  padding: ${modularScale(2)};
+  margin: 0px auto;
+  width: 100%;
 `;
