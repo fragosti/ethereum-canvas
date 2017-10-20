@@ -5,13 +5,13 @@ import { colors } from '../style/utils';
 
 export const Description = styled.p`
   color: ${colors.grayText};
-  font-size: ${props => props.size !== undefined ? modularScale(props.size - 1) : '24px'};
+  font-size: ${props => props.size !== undefined ? modularScale(props.size) : '24px'};
 `
 
 export const Title = styled.p`
   color: ${colors.black};
   font-weight: 700;
-  font-size: ${props => props.size !== undefined ? modularScale(props.size - 1) : '30px'};
+  font-size: ${props => props.size !== undefined ? modularScale(props.size ) : '30px'};
 `
 
 export const Heading = styled.h1`

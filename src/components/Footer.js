@@ -4,7 +4,6 @@ import { modularScale } from 'polished';
 import { Flex, Box } from 'grid-styled';
 
 import { colors } from '../style/utils';
-import { Description } from './Text';
 import Logo from './Logo';
 import Link from './Link';
 
@@ -12,12 +11,10 @@ const CenteredContent = Box.extend`
   text-align: center;
 `
 
-
 const Footer = ({ className }) => (
   <Flex width={2/3} wrap is='footer' className={className}>
     <CenteredContent width={1/3}>
-      <Logo iconHeight={20} iconWidth={25} titleSize={1}/>
-      <Description size={0}>Paint on the blockchain</Description>
+      <Logo scale={1/2}/>
     </CenteredContent>
     <Box width={1/2} my='auto'> 
       <Flex justify='space-evenly' wrap>
