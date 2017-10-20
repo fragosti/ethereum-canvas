@@ -11,22 +11,33 @@ const CenteredContent = Box.extend`
   text-align: center;
 `
 
+const FooterFlex = Flex.extend`
+  max-width: 1080px;
+`
+
+const FooterLink = Link.extend`
+  margin-bottom: 5px;
+  margin-left: 1em;
+`
+
 const Footer = ({ className }) => (
-  <Flex width={2/3} wrap is='footer' className={className}>
-    <CenteredContent width={1/3}>
-      <Logo scale={1/2}/>
-    </CenteredContent>
-    <Box width={1/2} my='auto'> 
-      <Flex justify='space-evenly' wrap>
-        <Link>About</Link>
-        <Link>FAQ</Link>
-        <Link>HowTo</Link>
-        <Link>Contract</Link>
-        <Link>Source Code</Link>
-      </Flex>
-    </Box>
-  </Flex>
-)
+  <footer className={className}>
+    <FooterFlex wrap width='100%' mx='auto'>
+      <CenteredContent width={[1/2, 1/3]}>
+        <Logo scales={[1/4, 1/3, 1/2]}/>
+      </CenteredContent>
+      <Box width={[1/3,1/2]} my='auto'> 
+        <Flex justify='space-evenly' wrap>
+          <FooterLink>About</FooterLink>
+          <FooterLink>FAQ</FooterLink>
+          <FooterLink>HowTo</FooterLink>
+          <FooterLink>Contract</FooterLink>
+          <FooterLink>Source</FooterLink>
+        </Flex>
+      </Box>
+    </FooterFlex>
+  </footer>
+);
 
 export default styled(Footer)`
   border-top: 1px solid ${colors.grayBorder};

@@ -1,20 +1,21 @@
 import React from 'react';
 import { modularScale } from 'polished';
 import { Flex, Box } from 'grid-styled';
+import { fontSize } from 'styled-system';
 
 import { Heading } from './Text';
 import { colors } from '../style/utils';
 import { Description } from './Text';
 
 const LogoFlex = Flex.extend`
-  font-size: ${props => props.fontSize || '1em'};
   text-align: center;
+  ${fontSize}
 `;
 
-const Logo = ({ className, scale }) => {
-  const fontSize = `${scale*20}px`;
-  const iconHeight = scale*40;
-  const iconWidth = scale*50
+const Logo = ({ className, scales }) => {
+  const fontSize = scales.map(scale => `${scale*20}px`);
+  const iconHeight = `2em`;
+  const iconWidth = `2.5em`;
   return (
     <LogoFlex
       className={className}
@@ -43,7 +44,7 @@ const Logo = ({ className, scale }) => {
 
 
 Logo.defaultProps = {
-  scale: .8,
+  scales: [.5, .8],
 }
 
 export default Logo;

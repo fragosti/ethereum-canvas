@@ -26,8 +26,10 @@ class Canvas extends Component {
 
 export default styled(Canvas)`
   border: 1px solid ${colors.grayBorder};
-  width: 1000px;
-  height: 1000px;
+  max-width: 1000px;
+  max-height: 1000px;
+  height: 100%;
+  width: 100%;
   border-radius: 2px;
   box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
   background-color: ${colors.white};

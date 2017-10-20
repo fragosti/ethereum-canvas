@@ -70,9 +70,9 @@ class App extends Component {
       <div> 
         <Header/>
         <MainFlex justify='center' is='main'> 
-          <Box is='section' m={modularScale(1)}>
+          {/*<Box is='section' m={modularScale(1)}>
             <Canvas/>
-          </Box>
+          </Box>*/}
         </MainFlex>
         <Footer/>
       </div>

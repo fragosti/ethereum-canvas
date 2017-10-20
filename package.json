@@ -58,7 +58,8 @@
     "react-dom": "^15.4.2",
     "react-feather": "^1.0.7",
     "react-konva": "^1.1.5",
-    "styled-components": "^2.2.1"
+    "styled-components": "^2.2.1",
+    "styled-system": "^1.0.8"
   },
   "scripts": {
     "start": "node scripts/start.js",
