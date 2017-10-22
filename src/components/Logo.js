@@ -37,7 +37,7 @@ const Logo = ({ className, scales }) => {
           </Heading>
         </Box>
       </Flex>
-      <Description size={0}>Paint on the blockchain</Description>
+      <Description size={0}>Draw on the blockchain</Description>
     </LogoFlex>
   )
 }

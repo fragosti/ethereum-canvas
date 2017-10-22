@@ -8,6 +8,7 @@ import { colors } from '../style/utils';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
+import Control from './Control';
 
 const MainFlex = Flex.extend`
   background-color: ${colors.grayBackground};
@@ -69,10 +70,13 @@ class App extends Component {
     return (
       <div> 
         <Header/>
-        <MainFlex justify='center' is='main'> 
-          {/*<Box is='section' m={modularScale(1)}>
+        <MainFlex align='center' justify='center' is='main' direction='column'>
+          <Box is='section' mt={modularScale(1)}>
+            <Control/>
+          </Box>
+          <Box is='section' m={modularScale(1)}>
             <Canvas/>
-          </Box>*/}
+          </Box>
         </MainFlex>
         <Footer/>
       </div>
