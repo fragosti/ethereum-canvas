@@ -6,55 +6,57 @@ import { space } from 'styled-system'
 
 import { colors } from '../style/utils';
 
-const StyledButton = styled.button`
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.15);
-  font-size: ${props => props.fontSize}px;
-  min-width: 4em;
-  padding: .8em 2.5em;
-  font-weight: 700;
-  font-family: 'Lato', sans-serif;
-  background: ${colors.orange};
-  border: 1px solid ${darken(0.2, colors.orange)};
-  border-radius: 3px;
-  color: ${colors.white};
-  cursor: pointer;
-  &:hover {
-    background: ${saturate(0.2, colors.orange)}
-  }
-  &:focus {
-    outline: none;
-    background: ${saturate(0.4, colors.orange)}
-  }
-  &:active {
-    background: ${desaturate(0.2, colors.orange)};
-  }
-`;
 
 const IconContainer = styled.span`
   position: relative;
-  top: 2px;
-  left: 6px;
+  top: 3px;
+  left: 8px;
 `
 
-const Button = ({ iconName, fontSize, children, className }) => {
+const Button = ({ iconName, fontSize, children, onClick, className }) => {
   const Icon = Icons[iconName]
   return (
-    <StyledButton fontSize={fontSize} className={className}> 
+    <button onClick={onClick} className={className}> 
       {children}
       {Icon && (
         <IconContainer>
           <Icon size={fontSize}/>
         </IconContainer>
       )}
-    </StyledButton>
+    </button>
   )  
 };
 
-Button.defaultProps = {
+
+const StyledButton = styled(Button)`
+  ${space}
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.15);
+  font-size: ${props => props.fontSize}px;
+  min-width: 4em;
+  padding: .8em 2.5em;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+  background: ${props => props.color};
+  border: 1px solid ${props => darken(0.2, props.color)};
+  border-radius: 3px;
+  color: ${colors.white};
+  cursor: pointer;
+  &:hover {
+    background: ${props => saturate(0.2, props.color)}
+  }
+  &:focus {
+    outline: none;
+    background: ${props => saturate(0.4, props.color)}
+  }
+  &:active {
+    background: ${props => desaturate(0.2, props.color)};
+  }
+`;
+
+StyledButton.defaultProps = {
   icon: null,
   fontSize: 18,
+  color: colors.orange,
 }
 
-export default styled(Button)`
-  ${space}
-`;
+export default StyledButton;

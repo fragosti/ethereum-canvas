@@ -37,7 +37,9 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
   return accumulator
 }, {})
 
-export const zIndex = {};
+export const zIndex = {
+  aboveLabel: 1,
+};
 
 
 export const rotate360 = keyframes`
