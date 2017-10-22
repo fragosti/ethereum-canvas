@@ -24,30 +24,32 @@ const Options = ({ children }) => (
 )
 
 class Control extends Component {
-  state = {
-    selectedTool: null,
-    selectedColor: colors.blue,
-    drawThickness: 1,
-  }
 
   selectTool = (selectedTool) => {
-    this.setState({ selectedTool })
+    this.props.onChange('selectedTool', selectedTool)
+  }
+
+  selectColor = (color) => {
+    this.props.onChange('selectedColor', color)
+  }
+
+  selectDrawThickness = (thickness) => {
+    this.props.onChange('drawThickness', thickness)
   }
 
   selectLine = () => this.selectTool('draw')
   selectImage = () => this.selectTool('image')
-
-  selectColor = ({ hex }) => this.setState({ selectedColor: hex })
+  onColorChange = ({ hex }) => this.selectColor(hex)
 
   optionsForTool = (tool) => {
-    const { selectedColor, drawThickness } = this.state;
+    const { selectedColor, drawThickness } = this.props;
     const pixelOptions = [1,2,3,4,5,6,7,8,9,10].map(v => ({ value: v, label: `${v}px` }))
     const colorPicker = (
       <ColorPicker
         mx='1em'
         label='Color:'
         color={selectedColor}
-        onChange={this.selectColor}
+        onChange={this.onColorChange}
       />
     )
     switch(tool) {
@@ -61,7 +63,7 @@ class Control extends Component {
               name='drawThickness'
               options={pixelOptions}
               value={drawThickness}
-              onChange={(_, value) => this.setState({ drawThickness: value })}
+              onChange={(_, value) => this.selectDrawThickness(value)}
             />
           </Options>
         )
@@ -72,15 +74,14 @@ class Control extends Component {
             
           </Options>
         )
+      default:
+        return null
     }
   }
 
   render() {
-    const { 
-      className,
-      onColorChange,
-     } = this.props;
-    const { selectedTool, selectedColor } = this.state;
+    const { className } = this.props;
+    const { selectedTool } = this.props;
     return (
       <Island className={className}>
         <Box>

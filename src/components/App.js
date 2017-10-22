@@ -16,7 +16,11 @@ const MainFlex = Flex.extend`
 
 class App extends Component {
 
-
+  state = {
+    selectedTool: null,
+    selectedColor: colors.blue,
+    drawThickness: 1,
+  }
   // componentWillMount() {
   //   // Get network provider and web3 instance.
   //   // See utils/getWeb3 for more info.
@@ -66,13 +70,25 @@ class App extends Component {
   //   })
   // }
 
+  changeSetting = (name, value) => {
+    this.setState({
+      [name]: value
+    })
+  }
+
   render() {
+    const { selectedColor, drawThickness, selectedTool } = this.state;
     return (
       <div> 
         <Header/>
         <MainFlex align='center' justify='center' is='main' direction='column'>
           <Box is='section' mt={modularScale(1)}>
-            <Control/>
+            <Control
+              selectedTool={selectedTool}
+              selectedColor={selectedColor}
+              drawThickness={drawThickness}
+              onChange={this.changeSetting}
+            />
           </Box>
           <Box is='section' m={modularScale(1)}>
             <Canvas/>
