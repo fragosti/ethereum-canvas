@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished'
 import { Box, Flex } from 'grid-styled';
+import { X } from 'react-feather';
 
 import Island from './Island';
 import Button from './Button';
@@ -11,15 +12,24 @@ import { colors } from '../style/utils';
 
 const StyledFlex = Flex.extend`
   border-top: 1px solid ${colors.grayBorder};
+  position: relative;
 `
 
-const Options = ({ children }) => (
+const Close = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  cursor: pointer;
+`
+
+const Options = ({ children, onClickClose }) => (
   <StyledFlex 
     justify='center'
     mt='1em' 
     pt={modularScale(2)} 
     px={modularScale(2)}>
     {children}
+    <Close onClick={onClickClose}><X/></Close>
   </StyledFlex>
 )
 
@@ -37,6 +47,7 @@ class Control extends Component {
     this.props.onChange('drawThickness', thickness)
   }
 
+  selectNone = () => this.selectTool(null)
   selectLine = () => this.selectTool('draw')
   selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
@@ -55,7 +66,7 @@ class Control extends Component {
     switch(tool) {
       case 'draw':
         return (
-          <Options>
+          <Options onClickClose={this.selectNone}>
             {colorPicker}
             <Picker
               mx='1em'
@@ -69,7 +80,7 @@ class Control extends Component {
         )
       case 'image':
         return (
-          <Options>
+          <Options onClickClose={this.selectNone}>
             {colorPicker}
             
           </Options>
@@ -85,10 +96,20 @@ class Control extends Component {
     return (
       <Island className={className}>
         <Box>
-          <Button mx='1em' iconName='Edit2' onClick={this.selectLine}>
+          <Button 
+            mx='1em' 
+            iconName='Edit2' 
+            selected={selectedTool === 'draw'}
+            onClick={this.selectLine}
+          >
             Draw
           </Button> 
-          <Button mx='1em' iconName='Image' onClick={this.selectImage}>
+          <Button 
+            mx='1em' 
+            iconName='Image' 
+            selected={selectedTool === 'image'}
+            onClick={this.selectImage}
+          >
             Image
           </Button> 
         </Box>

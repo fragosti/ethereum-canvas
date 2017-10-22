@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { darken, saturate, desaturate } from 'polished';
 import * as Icons from 'react-feather';
-import { space } from 'styled-system'
+import { space } from 'styled-system';
 
 import { colors } from '../style/utils';
 
@@ -36,7 +36,7 @@ const StyledButton = styled(Button)`
   padding: .8em 2.5em;
   font-weight: 700;
   font-family: 'Lato', sans-serif;
-  background: ${props => props.color};
+  background: ${props => props.selected ? saturate(0.4, props.color) : props.color};
   border: 1px solid ${props => darken(0.2, props.color)};
   border-radius: 3px;
   color: ${colors.white};
