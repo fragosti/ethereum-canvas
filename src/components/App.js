@@ -78,6 +78,7 @@ class App extends Component {
 
   render() {
     const { selectedColor, drawThickness, selectedTool } = this.state;
+    console.log(selectedTool)
     return (
       <div> 
         <Header/>
@@ -91,7 +92,11 @@ class App extends Component {
             />
           </Box>
           <Box is='section' m={modularScale(1)}>
-            <Canvas/>
+            <Canvas
+              tool={selectedTool}
+              color={selectedColor}
+              drawThickness={drawThickness}
+            />
           </Box>
         </MainFlex>
         <Footer/>

@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Layer, Rect, Stage } from 'react-konva';
 
+import Sketchpad from './SketchPad';
 import Island from './Island';
 
 class Canvas extends Component {
 
   render() {
-    const { className } = this.props;
+    const { 
+      color, 
+      tool, 
+      drawThickness,
+      className,
+    } = this.props;
     return (
       <Island className={className}>
-        <Stage width={1000} height={1000}>
-          <Layer>
-            <Rect
-              x={10}
-              y={10}
-              width={50}
-              height={50}
-              fill={'red'}
-              shadowBlur={5}/>
-          </Layer>
-        </Stage> 
+        <Sketchpad
+          width={1000}
+          height={1000}
+          size={drawThickness}
+          color={color}
+          tool={tool}
+          items={[]}
+        />
       </Island>
     )
   }
