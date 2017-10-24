@@ -4,6 +4,7 @@ import { modularScale } from 'polished';
 // import getWeb3 from '../utils/getWeb3';
 import { Flex, Box } from 'grid-styled';
 
+import { TOOL_NONE } from '../tools';
 import { colors } from '../style/utils';
 import Header from './Header';
 import Canvas from './Canvas';
@@ -17,7 +18,7 @@ const MainFlex = Flex.extend`
 class App extends Component {
 
   state = {
-    selectedTool: null,
+    selectedTool: TOOL_NONE,
     selectedColor: colors.blue,
     drawThickness: 1,
   }

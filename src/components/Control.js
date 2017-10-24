@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { modularScale } from 'polished'
 import { Box, Flex } from 'grid-styled';
 import { X } from 'react-feather';
+import { space } from 'styled-system';
 
 import Island from './Island';
 import Button from './Button';
 import ColorPicker from './ColorPicker';
 import Picker from './Picker';
 import { colors } from '../style/utils';
-import { TOOL_PENCIL } from '../tools'
+import { TOOL_PENCIL, TOOL_NONE } from '../tools';
 
 const StyledFlex = Flex.extend`
   border-top: 1px solid ${colors.grayBorder};
@@ -48,7 +49,7 @@ class Control extends Component {
     this.props.onChange('drawThickness', thickness)
   }
 
-  selectNone = () => this.selectTool(null)
+  selectNone = () => this.selectTool(TOOL_NONE)
   selectPencil = () => this.selectTool(TOOL_PENCIL)
   selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
@@ -113,6 +114,14 @@ class Control extends Component {
           >
             Image
           </Button> 
+          <Button 
+            mx='1em' 
+            disabled
+            color={colors.blue}
+            iconName='Award' 
+          >
+            Claim
+          </Button> 
         </Box>
         {selectedTool &&
           this.optionsForTool(selectedTool)
@@ -126,4 +135,5 @@ class Control extends Component {
 export default styled(Control)`
   padding: ${modularScale(2)};
   max-width: 1080px;
+  ${space}
 `

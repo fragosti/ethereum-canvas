@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import { findDOMNode } from 'react-dom'
-import { pencil, TOOL_PENCIL } from '../tools'
+import { pencil, TOOL_PENCIL, none, TOOL_NONE } from '../tools'
 
 export const toolsMap = {
   [TOOL_PENCIL]: pencil,
+  [TOOL_NONE]: none,
   // [TOOL_LINE]: Line,
   // [TOOL_RECTANGLE]: Rectangle,
   // [TOOL_ELLIPSE]: Ellipse

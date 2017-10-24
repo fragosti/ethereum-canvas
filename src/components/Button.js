@@ -27,7 +27,11 @@ const Button = ({ iconName, fontSize, children, onClick, className }) => {
   )  
 };
 
-
+const background = ({ color, selected, disabled }) => {
+  if (selected) return saturate(0.4, color);
+  if (disabled) return desaturate(0.4, color);
+  return color
+}
 const StyledButton = styled(Button)`
   ${space}
   box-shadow: 0 1px 1px 0 rgba(0,0,0,.15);
@@ -36,20 +40,20 @@ const StyledButton = styled(Button)`
   padding: .8em 2.5em;
   font-weight: 700;
   font-family: 'Lato', sans-serif;
-  background: ${props => props.selected ? saturate(0.4, props.color) : props.color};
+  background: ${props => background(props)};
   border: 1px solid ${props => darken(0.2, props.color)};
   border-radius: 3px;
   color: ${colors.white};
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'default': 'pointer'};
   &:hover {
-    background: ${props => saturate(0.2, props.color)}
+    background: ${props => props.disabled ? null : saturate(0.2, props.color)}
   }
   &:focus {
     outline: none;
-    background: ${props => saturate(0.4, props.color)}
+    background: ${props => props.disabled ? null : saturate(0.4, props.color)}
   }
   &:active {
-    background: ${props => desaturate(0.2, props.color)};
+    background: ${props => props.disabled ? null : desaturate(0.2, props.color)};
   }
 `;
 
