@@ -78,7 +78,6 @@ class App extends Component {
 
   render() {
     const { selectedColor, drawThickness, selectedTool } = this.state;
-    console.log(selectedTool)
     return (
       <div> 
         <Header/>
