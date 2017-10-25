@@ -93,8 +93,7 @@ class Control extends Component {
   }
 
   render() {
-    const { className } = this.props;
-    const { selectedTool } = this.props;
+    const { className, selectedTool, claimPixels } = this.props;
     return (
       <Island className={className}>
         <Box>
@@ -118,14 +117,13 @@ class Control extends Component {
             mx='1em' 
             disabled
             color={colors.blue}
-            iconName='Award' 
+            iconName='Award'
+            onClick={claimPixels}
           >
             Claim
           </Button> 
         </Box>
-        {selectedTool &&
-          this.optionsForTool(selectedTool)
-        }
+        {selectedTool && this.optionsForTool(selectedTool)}
       </Island>
     )
   }

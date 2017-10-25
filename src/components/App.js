@@ -71,6 +71,12 @@ class App extends Component {
   //   })
   // }
 
+  getStagingCanvasPixels = () => {
+    const context = document.getElementById('staging-canvas').getContext('2d')
+    const image = context.getImageData(0, 0, 1000, 1000)
+    console.log(image)
+  }
+
   changeSetting = (name, value) => {
     this.setState({
       [name]: value
@@ -87,6 +93,7 @@ class App extends Component {
             <Control
               selectedTool={selectedTool}
               selectedColor={selectedColor}
+              claimPixels={this.getStagingCanvasPixels}
               drawThickness={drawThickness}
               onChange={this.changeSetting}
             />
