@@ -124,6 +124,7 @@ export default class SketchPad extends Component {
         onMouseUp={this.onMouseUp}
         width={width}
         height={height}
+        style={{ position: 'absolute' }}
       />
     )
   }

@@ -21,14 +21,15 @@ class App extends Component {
     selectedColor: colors.blue,
     drawThickness: 1,
   }
+
   componentWillMount() {
     getContract().then(console.log)
   }
 
-  getStagingCanvasPixels = () => {
-    const context = document.getElementById('staging-canvas').getContext('2d')
-    const image = context.getImageData(0, 0, 1000, 1000)
-    console.log(image)
+  claimPixels = () => {
+    const stagingContext = document.getElementById('staging-canvas').getContext('2d')
+    const stagingImage = stagingContext.getImageData(0, 0, 1000, 1000)
+    
   }
 
   changeSetting = (name, value) => {
@@ -47,7 +48,7 @@ class App extends Component {
             <Control
               selectedTool={selectedTool}
               selectedColor={selectedColor}
-              claimPixels={this.getStagingCanvasPixels}
+              claimPixels={this.claimPixels}
               drawThickness={drawThickness}
               onChange={this.changeSetting}
             />

@@ -23,6 +23,11 @@ class Canvas extends Component {
           tool={tool}
           items={[]}
         />
+        <canvas
+          id='main-canvas'
+          width={1000}
+          height={1000}
+        />
       </Island>
     )
   }
