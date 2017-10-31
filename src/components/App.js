@@ -5,6 +5,7 @@ import { Flex, Box } from 'grid-styled';
 
 import { TOOL_NONE } from '../tools';
 import { colors } from '../style/utils';
+import { diff } from '../utils/image';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
@@ -27,9 +28,10 @@ class App extends Component {
   }
 
   claimPixels = () => {
-    const stagingContext = document.getElementById('staging-canvas').getContext('2d')
-    const stagingImage = stagingContext.getImageData(0, 0, 1000, 1000)
-    
+    const stagingContext = document.getElementById('staging-canvas').getContext('2d');
+    const mainContext = document.getElementById('main-canvas').getContext('2d');
+    console.log('claiming')
+    console.log(diff(mainContext, stagingContext));
   }
 
   changeSetting = (name, value) => {
