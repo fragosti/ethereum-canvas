@@ -14,15 +14,24 @@ export const get = (context, i, j) => {
 };
 
 // context = CanvasRenderingContext2D
-export const diff = (context1, context2, width = 100, height = 100) => {
+export const diff = (context1, context2, width = 1000, height = 1000) => {
   const diffPoints = [];
-  for (let i = 0 ; i < width ; i++) {
-    for (let j = 0 ; j < height ; j++) {
-      const c1 = get(context1, i, j);
-      const c2 = get(context2, i, j);
-      if (c1.r !== c2.r || c1.g !== c2.g || c1.b !== c2.b) {
-        diffPoints.push(rgbToHex(c2.r, c2.g, c2.b));
-      }
+  const data1 = context1.getImageData(0, 0, width, height).data;
+  const data2 = context2.getImageData(0, 0, width, height).data;
+  for (let i = 0 ; i < data1.length ; i += 4) {
+    const ri = i;
+    const gi = i + 1;
+    const bi = i + 2;
+    if (
+      data1[ri] !== data2[ri] ||
+      data1[gi] !== data2[gi] ||
+      data1[bi] !== data2[bi]
+      ) {
+      diffPoints.push(rgbToHex(
+        data2[ri],
+        data2[gi],
+        data2[bi],
+      ))
     }
   }
   return diffPoints;

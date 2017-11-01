@@ -30,7 +30,6 @@ class App extends Component {
   claimPixels = () => {
     const stagingContext = document.getElementById('staging-canvas').getContext('2d');
     const mainContext = document.getElementById('main-canvas').getContext('2d');
-    console.log('claiming')
     console.log(diff(mainContext, stagingContext));
   }
 
