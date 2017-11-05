@@ -6,15 +6,21 @@ contract EthereumCanvas {
     uint soldPrice;
     bytes3 color;
   }
+  struct PixelDiff {
+    uint x;
+    uint y;
+    bytes3 color;
+  }
+
   Pixel[1000][1000] public pixels;
   mapping(address => uint) public pendingRefunds;
 
   event PixelChanged(
     uint x,
     uint y,
+    bytes3 color
     address owner,
     uint soldPrice,
-    bytes3 color
   );
 
   function colorPixel(uint x, uint y, bytes3 color) payable {
@@ -32,6 +38,10 @@ contract EthereumCanvas {
     pixel.color = color;
 
     PixelChanged(x, y, pixel.owner, pixel.soldPrice, pixel.color);
+  }
+
+  function colorPixels(PixelDiff[] changedPixels) payable {
+    
   }
   
   // based on PullPayment.sol
