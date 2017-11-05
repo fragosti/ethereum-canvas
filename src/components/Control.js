@@ -10,7 +10,7 @@ import Button from './Button';
 import ColorPicker from './ColorPicker';
 import Picker from './Picker';
 import { colors } from '../style/utils';
-import { TOOL_PENCIL, TOOL_NONE } from '../tools';
+import { TOOL_PENCIL, TOOL_NONE, TOOL_ERASER } from '../tools';
 
 const StyledFlex = Flex.extend`
   border-top: 1px solid ${colors.grayBorder};
@@ -51,6 +51,7 @@ class Control extends Component {
 
   selectNone = () => this.selectTool(TOOL_NONE)
   selectPencil = () => this.selectTool(TOOL_PENCIL)
+  selectEraser = () => this.selectTool(TOOL_ERASER)
   selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
 
@@ -84,7 +85,6 @@ class Control extends Component {
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
-            
           </Options>
         )
       default:
@@ -100,7 +100,7 @@ class Control extends Component {
           <Button 
             mx='1em' 
             iconName='Edit2' 
-            selected={selectedTool === 'draw'}
+            selected={selectedTool === TOOL_PENCIL}
             onClick={this.selectPencil}
           >
             Draw
@@ -112,6 +112,14 @@ class Control extends Component {
             onClick={this.selectImage}
           >
             Image
+          </Button> 
+          <Button 
+            mx='1em' 
+            iconName='Edit2' 
+            selected={selectedTool === TOOL_ERASER }
+            onClick={this.selectEraser}
+          >
+            Erase
           </Button> 
           <Button 
             mx='1em' 
