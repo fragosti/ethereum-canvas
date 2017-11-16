@@ -10,6 +10,7 @@ import Button from './Button';
 import ColorPicker from './ColorPicker';
 import Picker from './Picker';
 import { colors } from '../style/utils';
+import getAccounts from '../utils/getAccounts';
 import { TOOL_PENCIL, TOOL_NONE, TOOL_ERASER } from '../tools';
 
 const StyledFlex = Flex.extend`
@@ -28,21 +29,51 @@ const Options = ({ children, onClickClose }) => (
   <StyledFlex 
     justify='center'
     mt='1em' 
+    align='flex-end'
     pt={modularScale(2)} 
-    px={modularScale(2)}>
+    px={modularScale(2)}
+  >
     {children}
     <Close onClick={onClickClose}><X/></Close>
   </StyledFlex>
 )
 
+export const PENCIL_OPTIONS = 'pencilOptions';
+export const IMAGE_OPTIONS = 'imageOptions';
+export const ERASE_OPTIONS = 'eraseOptions';
+export const CLAIM_OPTIONS = 'claimOptions';
+
+const toolsToOptions = {
+  [TOOL_PENCIL]: PENCIL_OPTIONS,
+  [TOOL_NONE]: null,
+  [TOOL_ERASER]: ERASE_OPTIONS,
+}
+
 class Control extends Component {
 
+  state = {
+    accounts: null,
+  }
+
+  componentDidMount() {
+    getAccounts().then(accounts => this.setState({ accounts: accounts || [] }))
+  }
+
+  selectOptions = (options) => {
+    this.props.onChange('selectedOptions', options);
+  }
+
   selectTool = (selectedTool) => {
-    this.props.onChange('selectedTool', selectedTool)
+    this.props.onChange('selectedTool', selectedTool);
+    this.selectOptions(toolsToOptions[selectedTool]);
   }
 
   selectColor = (color) => {
     this.props.onChange('selectedColor', color)
+  }
+
+  selectAccount = (account) => {
+    this.props.onChange('selectedAccount', account)
   }
 
   selectDrawThickness = (thickness) => {
@@ -55,9 +86,18 @@ class Control extends Component {
   selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
 
-  optionsForTool = (tool) => {
-    const { selectedColor, drawThickness } = this.props;
+  optionsToShow = () => {
+    const { 
+      selectedColor, 
+      selectedOptions, 
+      selectedAccount, 
+      drawThickness, 
+      claimPixels 
+    } = this.props;
+    const { accounts } = this.state;
+    if (!selectedOptions) return null;
     const pixelOptions = [1,2,3,4,5,6,7,8,9,10].map(v => ({ value: v, label: `${v}px` }))
+    const accountOptions = accounts.map(v => ({ value: v, label: v }))
     const colorPicker = (
       <ColorPicker
         mx='1em'
@@ -66,8 +106,8 @@ class Control extends Component {
         onChange={this.onColorChange}
       />
     )
-    switch(tool) {
-      case TOOL_PENCIL:
+    switch(selectedOptions) {
+      case PENCIL_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
@@ -81,10 +121,29 @@ class Control extends Component {
             />
           </Options>
         )
-      case 'image':
+      case IMAGE_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
+          </Options>
+        )
+      case CLAIM_OPTIONS:
+        return (
+          <Options onClickClose={this.selectNone}>
+            <Picker
+              mx='1em'
+              label='Account:'
+              name='account'
+              options={accountOptions}
+              value={selectedAccount}
+              onChange={(_, value) => this.selectAccount(value)}
+            />
+            <Button
+              mx='1em'
+              color={colors.blue}
+              iconName='Zap'
+              onClick={claimPixels}
+            >Go</Button>
           </Options>
         )
       default:
@@ -93,14 +152,14 @@ class Control extends Component {
   }
 
   render() {
-    const { className, selectedTool, claimPixels } = this.props;
+    const { className, selectedOptions } = this.props;
     return (
       <Island className={className}>
         <Box>
           <Button 
             mx='1em' 
             iconName='Edit2' 
-            selected={selectedTool === TOOL_PENCIL}
+            selected={selectedOptions === PENCIL_OPTIONS}
             onClick={this.selectPencil}
           >
             Draw
@@ -108,7 +167,7 @@ class Control extends Component {
           <Button 
             mx='1em' 
             iconName='Image' 
-            selected={selectedTool === 'image'}
+            selected={selectedOptions === 'image'}
             onClick={this.selectImage}
           >
             Image
@@ -116,22 +175,21 @@ class Control extends Component {
           <Button 
             mx='1em' 
             iconName='Edit2' 
-            selected={selectedTool === TOOL_ERASER }
+            selected={selectedOptions === ERASE_OPTIONS }
             onClick={this.selectEraser}
           >
             Erase
           </Button> 
           <Button 
             mx='1em' 
-            disabled
-            color={colors.blue}
+            selected={selectedOptions === CLAIM_OPTIONS }
             iconName='Award'
-            onClick={claimPixels}
+            onClick={() => this.selectOptions(CLAIM_OPTIONS)}
           >
             Claim
           </Button> 
         </Box>
-        {selectedTool && this.optionsForTool(selectedTool)}
+        {this.optionsToShow()}
       </Island>
     )
   }

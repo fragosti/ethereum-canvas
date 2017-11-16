@@ -14,9 +14,11 @@ export const get = (context, i, j) => {
 };
 
 // context = CanvasRenderingContext2D
-// Returns [[x ,y , hexColor],...]
+// Returns { xs, ys, colors }
 export const diff = (context1, context2, width = 1000, height = 1000) => {
-  const diffPoints = [];
+  const xs = [];
+  const ys = [];
+  const colors = [];
   const data1 = context1.getImageData(0, 0, width, height).data;
   const data2 = context2.getImageData(0, 0, width, height).data;
   for (let i = 0 ; i < data1.length ; i += 4) {
@@ -35,8 +37,14 @@ export const diff = (context1, context2, width = 1000, height = 1000) => {
       );
       const x = (i / 4) % width;
       const y = (i / 4) / width;
-      diffPoints.push([x, y, color]);
+      xs.push(x);
+      ys.push(y);
+      colors.push(color);
     }
   }
-  return diffPoints;
+  return {
+    xs,
+    ys,
+    colors,
+  };
 };
