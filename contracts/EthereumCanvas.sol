@@ -1,47 +1,47 @@
 pragma solidity ^0.4.11;
 
 contract EthereumCanvas {
+  // .0001 ETH
+  // The min surplus needed in order to buy a pixel from someone else
+  uint constant pricePremium = 100000000000000; 
   struct Pixel {
     address owner;
     uint soldPrice;
-    bytes3 color;
-  }
-  struct PixelDiff {
-    uint x;
-    uint y;
     bytes3 color;
   }
 
   Pixel[1000][1000] public pixels;
   mapping(address => uint) public pendingRefunds;
 
-  event PixelChanged(
-    uint x,
-    uint y,
-    bytes3 color
+  event PixelsChanged(
     address owner,
-    uint soldPrice,
+    uint[] xs,
+    uint[] ys,
+    bytes3[] colors
   );
 
-  function colorPixel(uint x, uint y, bytes3 color) payable {
-    Pixel storage pixel = pixels[x][y];
+  function colorPixels(uint[] xs, uint[] ys, bytes3[] colors) payable {
+    require(xs.length == ys.length);
+    require(xs.length == colors.length);
+    uint totalPrice = 0;
+    for (uint i = 0 ; i < xs.length ; i++) {
+      uint x = xs[i];
+      uint y = ys[i];
+      bytes3 color = colors[i];
 
-    // pixel.soldPrice will initialize to 0
-    require(msg.value > pixel.soldPrice);
-    
-    if(pixel.owner != address(0x0)) {
-      pendingRefunds[pixel.owner] += pixel.soldPrice;
+      Pixel storage pixel = pixels[x][y];
+      totalPrice += pixel.soldPrice + pricePremium;
+
+      pixel.soldPrice = pixel.soldPrice + pricePremium;
+      pixel.owner = msg.sender;
+      pixel.color = color;
+
+      if(pixel.owner != address(0)) {
+        pendingRefunds[pixel.owner] += pixel.soldPrice;
+      }
     }
-
-    pixel.owner = msg.sender;
-    pixel.soldPrice = msg.value;
-    pixel.color = color;
-
-    PixelChanged(x, y, pixel.owner, pixel.soldPrice, pixel.color);
-  }
-
-  function colorPixels(PixelDiff[] changedPixels) payable {
-    
+    require(msg.value >= totalPrice);
+    PixelsChanged(msg.sender, xs, ys, colors);
   }
   
   // based on PullPayment.sol
