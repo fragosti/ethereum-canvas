@@ -22,6 +22,7 @@ class Canvas extends Component {
           color={color}
           tool={tool}
           items={[]}
+          onCompleteItem={console.log}
         />
         <canvas
           id='main-canvas'
