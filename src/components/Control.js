@@ -141,9 +141,8 @@ class Control extends Component {
             <Button
               mx='1em'
               color={colors.blue}
-              iconName='Zap'
               onClick={claimPixels}
-            >Go</Button>
+            >Claim Pixels</Button>
           </Options>
         )
       default:

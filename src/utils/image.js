@@ -36,7 +36,7 @@ export const diff = (context1, context2, width = 1000, height = 1000) => {
         data2[bi],
       );
       const x = (i / 4) % width;
-      const y = (i / 4) / width;
+      const y = Math.round((i / 4) / width);
       xs.push(x);
       ys.push(y);
       colors.push(color);

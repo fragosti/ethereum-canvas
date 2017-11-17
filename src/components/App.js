@@ -6,7 +6,6 @@ import { Flex, Box } from 'grid-styled';
 import { TOOL_NONE } from '../tools';
 import { colors } from '../style/utils';
 import { diff } from '../utils/image';
-import getAccounts from '../utils/getAccounts';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
@@ -27,18 +26,27 @@ class App extends Component {
   }
 
   componentWillMount() {
-    getContract().then(console.log)
+    getContract().then((contract) => {
+      window.contract = contract;
+
+      // contract.getPixels.call().then(console.log)
+    })
   }
 
   claimPixels = () => {
+    const { selectedAccount } = this.state;
     const stagingContext = document.getElementById('staging-canvas').getContext('2d');
     const mainContext = document.getElementById('main-canvas').getContext('2d');
     const { xs, ys, colors } = diff(mainContext, stagingContext);
-    Promise.all([getAccounts()])
-    // getContract().then((contract) => {
-    //   console.log(contract);
-    //   contract.colorPixels(xs, ys, colors);
-    // });
+    console.log(xs, ys, colors);
+    return getContract().then((contract) => {
+      return contract.colorPixels(xs, ys, colors, { 
+        // TODO: Calculate value & gas
+        value: 100000000000000000,
+        gas: 6385876,
+        from: selectedAccount
+      }).then(console.log);
+    });
   }
 
   changeSetting = (name, value) => {
