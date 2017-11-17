@@ -1,13 +1,21 @@
 import React, {Component, PropTypes} from 'react';
 import { findDOMNode } from 'react-dom'
-import { pencil, TOOL_PENCIL, none, TOOL_NONE } from '../tools'
+import { 
+  none, 
+  TOOL_NONE, 
+  line, 
+  TOOL_LINE, 
+  rectangle, 
+  TOOL_RECTANGLE, 
+  ellipse,
+  TOOL_ELLIPSE,
+} from '../tools';
 
 export const toolsMap = {
-  [TOOL_PENCIL]: pencil,
   [TOOL_NONE]: none,
-  // [TOOL_LINE]: Line,
-  // [TOOL_RECTANGLE]: Rectangle,
-  // [TOOL_ELLIPSE]: Ellipse
+  [TOOL_LINE]: line,
+  [TOOL_RECTANGLE]: rectangle,
+  [TOOL_ELLIPSE]: ellipse
 };
 
 export default class SketchPad extends Component {
@@ -42,7 +50,7 @@ export default class SketchPad extends Component {
     canvasClassName: 'canvas',
     debounceTime: 1000,
     animate: true,
-    tool: TOOL_PENCIL,
+    tool: TOOL_LINE,
     toolsMap
   };
 

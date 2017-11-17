@@ -59,7 +59,7 @@ const StyledButton = styled(Button)`
 
 StyledButton.defaultProps = {
   icon: null,
-  fontSize: 18,
+  fontSize: 15,
   color: colors.orange,
 }
 

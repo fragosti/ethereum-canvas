@@ -11,7 +11,13 @@ import ColorPicker from './ColorPicker';
 import Picker from './Picker';
 import { colors } from '../style/utils';
 import getAccounts from '../utils/getAccounts';
-import { TOOL_PENCIL, TOOL_NONE, TOOL_ERASER } from '../tools';
+import { 
+  TOOL_LINE, 
+  TOOL_RECTANGLE, 
+  TOOL_ELLIPSE, 
+  TOOL_NONE, 
+  TOOL_ERASER 
+} from '../tools';
 
 const StyledFlex = Flex.extend`
   border-top: 1px solid ${colors.grayBorder};
@@ -38,15 +44,18 @@ const Options = ({ children, onClickClose }) => (
   </StyledFlex>
 )
 
-export const PENCIL_OPTIONS = 'pencilOptions';
 export const IMAGE_OPTIONS = 'imageOptions';
+export const LINE_OPTIONS = 'lineOptions';
+export const SHAPE_OPTIONS = 'shapeOptions';
 export const ERASE_OPTIONS = 'eraseOptions';
 export const CLAIM_OPTIONS = 'claimOptions';
 
 const toolsToOptions = {
-  [TOOL_PENCIL]: PENCIL_OPTIONS,
   [TOOL_NONE]: null,
-  [TOOL_ERASER]: ERASE_OPTIONS,
+  [TOOL_ERASER]: null,
+  [TOOL_LINE]: LINE_OPTIONS,
+  [TOOL_RECTANGLE]: SHAPE_OPTIONS,
+  [TOOL_ELLIPSE]: SHAPE_OPTIONS
 }
 
 class Control extends Component {
@@ -81,7 +90,9 @@ class Control extends Component {
   }
 
   selectNone = () => this.selectTool(TOOL_NONE)
-  selectPencil = () => this.selectTool(TOOL_PENCIL)
+  selectLine = () => this.selectTool(TOOL_LINE)
+  selectRectangle = () => this.selectTool(TOOL_RECTANGLE)
+  selectEllipse = () => this.selectTool(TOOL_ELLIPSE)
   selectEraser = () => this.selectTool(TOOL_ERASER)
   selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
@@ -107,7 +118,7 @@ class Control extends Component {
       />
     )
     switch(selectedOptions) {
-      case PENCIL_OPTIONS:
+      case LINE_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
@@ -121,7 +132,7 @@ class Control extends Component {
             />
           </Options>
         )
-      case IMAGE_OPTIONS:
+      case SHAPE_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
@@ -151,22 +162,38 @@ class Control extends Component {
   }
 
   render() {
-    const { className, selectedOptions } = this.props;
+    const { className, selectedTool } = this.props;
     return (
       <Island className={className}>
         <Box>
           <Button 
             mx='1em' 
             iconName='Edit2' 
-            selected={selectedOptions === PENCIL_OPTIONS}
-            onClick={this.selectPencil}
+            selected={selectedTool === TOOL_LINE}
+            onClick={this.selectLine}
           >
-            Draw
+            Line
           </Button> 
           <Button 
             mx='1em' 
+            iconName='Square' 
+            selected={selectedTool === TOOL_RECTANGLE}
+            onClick={this.selectRectangle}
+          >
+            Rectangle
+          </Button>
+          <Button 
+            mx='1em' 
+            iconName='Circle' 
+            selected={selectedTool === TOOL_ELLIPSE}
+            onClick={this.selectEllipse}
+          >
+            Ellipse
+          </Button>  
+          <Button 
+            mx='1em' 
             iconName='Image' 
-            selected={selectedOptions === 'image'}
+            selected={selectedTool === 'image'}
             onClick={this.selectImage}
           >
             Image
@@ -174,15 +201,16 @@ class Control extends Component {
           <Button 
             mx='1em' 
             iconName='Edit2' 
-            selected={selectedOptions === ERASE_OPTIONS }
+            selected={selectedTool === ERASE_OPTIONS }
             onClick={this.selectEraser}
           >
             Erase
           </Button> 
           <Button 
             mx='1em' 
-            selected={selectedOptions === CLAIM_OPTIONS }
+            selected={selectedTool === CLAIM_OPTIONS }
             iconName='Award'
+            color={colors.blue}
             onClick={() => this.selectOptions(CLAIM_OPTIONS)}
           >
             Claim
