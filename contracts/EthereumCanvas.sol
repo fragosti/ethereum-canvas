@@ -43,17 +43,43 @@ contract EthereumCanvas {
     }
   }
 
+  function getNumberOfLines() view public returns (uint) {
+    return lines.length;
+  }  
+
   function calculateLinePrice(Line line) pure internal returns (uint) {
     uint dx = line.endX - line.startX;
     uint dy = line.endY - line.endX;
-    return line.size*sqrt(dx*dx + dy*dy);
+    return line.size*sqrt(dx*dx + dy*dy)*pixelPrice;
   }
 
-  function drawLine(bytes3 color, uint size, uint startX, uint startY, uint endX, uint endY) public payable {
+  function drawLine(bytes3 color, uint size, uint startX, uint startY, uint endX, uint endY) internal returns (uint) {
     Line memory line = Line(msg.sender, color, size, startX, startY, endX, endY);
     uint price = calculateLinePrice(line);
-    require(msg.value >= price);
     lines.push(line);
+    return price;
+  }
+  /**
+   * ShapeId:
+   * 0: Line
+   * 1: Rectangle
+   * 2: Ellipse
+   */
+  function drawShapes(uint[] shapeIds, bytes3[] colors, bytes3[] fills, uint[] sizes, uint[] startXs, uint[] startYs, uint[] endXs, uint[] endYs) public payable {
+    require(shapeIds.length == colors.length);
+    require(shapeIds.length == fills.length);
+    require(shapeIds.length == sizes.length);
+    require(shapeIds.length == startXs.length);
+    require(shapeIds.length == startYs.length);
+    require(shapeIds.length == endXs.length);
+    require(shapeIds.length == endYs.length);
+    uint totalCost = 0;
+    for (uint i = 0 ; i < shapeIds.length ; i++) {
+      if (shapeIds[i] == 0) { // Line
+        totalCost += drawLine(colors[i], sizes[i], startXs[i], startYs[i], endXs[i], endYs[i]);
+      }
+    }
+    require(msg.value >= totalCost);
   }
 
   // event PixelsChanged(

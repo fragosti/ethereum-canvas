@@ -11,6 +11,8 @@ class Canvas extends Component {
       color, 
       tool, 
       drawThickness,
+      items,
+      addItem,
       className,
     } = this.props;
     return (
@@ -21,13 +23,8 @@ class Canvas extends Component {
           size={drawThickness}
           color={color}
           tool={tool}
-          items={[]}
-          onCompleteItem={console.log}
-        />
-        <canvas
-          id='main-canvas'
-          width={1000}
-          height={1000}
+          items={items}
+          onCompleteItem={addItem}
         />
       </Island>
     )

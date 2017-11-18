@@ -16,6 +16,7 @@ export {
 export {
   default as line,
   TOOL_LINE,
+  rawToLineItem,
 } from './line';
 
 export {
