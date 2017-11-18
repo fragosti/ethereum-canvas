@@ -31,7 +31,6 @@ contract EthereumCanvas {
 
   Line[] public lines;
 
-  // Pixel[1000][1000] public pixels;
   mapping(address => uint) public pendingRefunds;
 
   function sqrt(uint x) pure internal returns (uint y) {
