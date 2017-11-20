@@ -2,7 +2,7 @@ pragma solidity ^0.4.11;
 
 contract EthereumCanvas {
   // .0001 ETH
-  uint constant pixelPrice = 100000000000000; 
+  uint constant pixelPrice = 100000000000000;
 
   struct Line {
     address owner;
@@ -16,8 +16,8 @@ contract EthereumCanvas {
 
   struct Rectangle {
     address owner;
+    bytes3 color;
     bytes3 fill;
-    bytes3 outline;
     uint size;
     uint startX;
     uint startY;
@@ -26,6 +26,7 @@ contract EthereumCanvas {
   }
 
   Line[] public lines;
+  Rectangle[] public rectangles;
 
   mapping(address => uint) public pendingRefunds;
 
@@ -37,6 +38,8 @@ contract EthereumCanvas {
         z = (x / z + z) / 2;
     }
   }
+
+  // Lines
 
   function getNumberOfLines() view public returns (uint) {
     return lines.length;
@@ -54,6 +57,26 @@ contract EthereumCanvas {
     lines.push(line);
     return price;
   }
+
+  // Rectangles
+
+  function getNumberOfRectangles() view public returns (uint) {
+    return rectangles.length;
+  }
+
+  function calculateRectanglePrice(Rectangle rec) pure internal returns (uint) {
+    uint dx = rec.endX > rec.startX ? rec.endX - rec.startX : rec.startX - rec.endX;
+    uint dy = rec.endY > rec.startY ? rec.endY - rec.startY : rec.startY - rec.endY;
+    return dx*dy;
+  }
+
+  function drawRectangle(bytes3 color, bytes3 fill, uint size, uint startX, uint startY, uint endX, uint endY) internal returns (uint) {
+    Rectangle memory rec = Rectangle(msg.sender, color, fill, size, startX, startY, endX, endY);
+    uint price = calculateRectanglePrice(rec);
+    rectangles.push(rec);
+    return price;
+  }
+
   /**
    * ShapeId:
    * 0: Line
@@ -72,6 +95,9 @@ contract EthereumCanvas {
     for (uint i = 0 ; i < shapeIds.length ; i++) {
       if (shapeIds[i] == 0) { // Line
         totalCost += drawLine(colors[i], sizes[i], startXs[i], startYs[i], endXs[i], endYs[i]);
+      }
+      if (shapeIds[i] == 1) { // Rectangle
+        totalCost += drawRectangle(colors[i], fills[i], sizes[i], startXs[i], startYs[i], endXs[i], endYs[i]);
       }
     }
     require(msg.value >= totalCost);
@@ -107,13 +133,13 @@ contract EthereumCanvas {
   
   // based on PullPayment.sol
   function withdrawRefunds() public {
-      address payee = msg.sender;
-      uint payment = pendingRefunds[payee];
-      
-      require(payment != 0);
-      require(this.balance >= payment);
-      
-      pendingRefunds[payee] = 0;
-      require(payee.send(payment));
+    address payee = msg.sender;
+    uint payment = pendingRefunds[payee];
+    
+    require(payment != 0);
+    require(this.balance >= payment);
+    
+    pendingRefunds[payee] = 0;
+    require(payee.send(payment));
   }
 }

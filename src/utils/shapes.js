@@ -15,7 +15,7 @@ export const itemsToShapes = (stagedItems) => {
   return stagedItems.reduce((acc, val, i) => {
     acc.shapeIds[i] = toolToId[val.tool];
     acc.colors[i] = '0x' + val.color.slice(1);
-    acc.fills[i] = val.fill;
+    acc.fills[i] = '0x' + val.fill.slice(1);
     acc.sizes[i] = val.size;
     acc.startXs[i] = val.start.x;
     acc.startYs[i] = val.start.y;

@@ -22,4 +22,5 @@ export {
 export {
   default as rectangle,
   TOOL_RECTANGLE,
+  rawRectToItem,
 } from './rectangle'

@@ -5,6 +5,7 @@ import { Flex, Box } from 'grid-styled';
 
 import { 
   rawToLineItem,
+  rawRectToItem,
   TOOL_NONE,
 } from '../tools';
 import { colors } from '../style/utils';
@@ -38,6 +39,11 @@ class App extends Component {
       contract.getNumberOfLines.call().then((length) => {
         range(Number(length)).forEach((i) => {
           contract.lines.call(i).then((rawLine) => this.addPermanentItem(rawToLineItem(rawLine)))
+        })
+      })
+      contract.getNumberOfRectangles.call().then((length) => {
+        range(Number(length)).forEach((i) => {
+          contract.rectangles.call(i).then((rawRect) => this.addPermanentItem(rawRectToItem(rawRect)))
         })
       })
     })
