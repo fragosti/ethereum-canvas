@@ -6,12 +6,10 @@ import { Flex, Box } from 'grid-styled';
 import { 
   rawToLineItem,
   TOOL_NONE,
-  TOOL_LINE, 
-  TOOL_RECTANGLE, 
-  TOOL_ELLIPSE, 
 } from '../tools';
 import { colors } from '../style/utils';
 import { range } from '../utils/array';
+import { itemsToShapes } from '../utils/shapes';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
@@ -21,12 +19,6 @@ import Control from './Control';
 const MainFlex = Flex.extend`
   background-color: ${colors.grayBackground};
 `;
-
-const toolToId = {
-  [TOOL_LINE]: 0,
-  [TOOL_RECTANGLE]: 1,
-  [TOOL_ELLIPSE]: 2,
-};
 
 class App extends Component {
 
@@ -53,7 +45,6 @@ class App extends Component {
 
   claimPixels = () => {
     const { selectedAccount, stagedItems } = this.state;
-    const numOfItems = stagedItems.length;
     const {
       shapeIds,
       colors,
@@ -63,29 +54,10 @@ class App extends Component {
       startYs,
       endXs,
       endYs,
-    } = stagedItems.reduce((acc, val, i) => {
-      acc.shapeIds[i] = toolToId[val.tool];
-      acc.colors[i] = '0x' + val.color.slice(1);
-      acc.fills[i] = val.fill;
-      acc.sizes[i] = val.size;
-      acc.startXs[i] = val.start.x;
-      acc.startYs[i] = val.start.y;
-      acc.endXs[i] = val.end.x;
-      acc.endYs[i] = val.end.y;
-      return acc;
-    }, {
-      shapeIds: Array(numOfItems),
-      colors: Array(numOfItems),
-      fills: Array(numOfItems),
-      sizes: Array(numOfItems),
-      startXs: Array(numOfItems),
-      startYs: Array(numOfItems),
-      endXs: Array(numOfItems),
-      endYs: Array(numOfItems),
-    });
-
+    } = itemsToShapes(stagedItems);
     return getContract().then((contract) => {
       contract.drawShapes(shapeIds, colors, fills, sizes, startXs, startYs, endXs, endYs, {
+        // TODO: Calculate value & gas.
         value: 100000000000000000,
         gas: 6385876,
         from: selectedAccount
