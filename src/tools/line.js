@@ -5,7 +5,7 @@ export const TOOL_LINE = 'line';
 export const rawToLineItem = (data) => ({
   id: v4(),
   tool: TOOL_LINE,
-  color: data[1],
+  color: `#${data[1].slice(2)}`,
   size: Number(data[2]),
   start: {
     x: Number(data[3]),

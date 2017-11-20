@@ -3,10 +3,6 @@ pragma solidity ^0.4.11;
 contract EthereumCanvas {
   // .0001 ETH
   uint constant pixelPrice = 100000000000000; 
-  // struct Pixel {
-  //   address owner;
-  //   bytes3 color;
-  // }
 
   struct Line {
     address owner;

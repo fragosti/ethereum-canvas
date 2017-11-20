@@ -65,7 +65,7 @@ class App extends Component {
       endYs,
     } = stagedItems.reduce((acc, val, i) => {
       acc.shapeIds[i] = toolToId[val.tool];
-      acc.colors[i] = val.color;
+      acc.colors[i] = '0x' + val.color.slice(1);
       acc.fills[i] = val.fill;
       acc.sizes[i] = val.size;
       acc.startXs[i] = val.start.x;
