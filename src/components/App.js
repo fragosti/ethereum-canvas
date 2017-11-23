@@ -4,13 +4,11 @@ import getContract from '../utils/getContract';
 import { Flex, Box } from 'grid-styled';
 
 import { 
-  rawToLineItem,
-  rawRectToItem,
   TOOL_NONE,
 } from '../tools';
 import { colors } from '../style/utils';
 import { range } from '../utils/array';
-import { itemsToShapes } from '../utils/shapes';
+import { itemsToShapes, rawShapeToItem } from '../utils/shapes';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
@@ -37,14 +35,9 @@ class App extends Component {
   componentWillMount() {
     getContract().then((contract) => {
       window.contract = contract;
-      contract.getNumberOfLines.call().then((length) => {
+      contract.getNumberOfShapes.call().then((length) => {
         range(Number(length)).forEach((i) => {
-          contract.lines.call(i).then((rawLine) => this.addPermanentItem(rawToLineItem(rawLine)))
-        })
-      })
-      contract.getNumberOfRectangles.call().then((length) => {
-        range(Number(length)).forEach((i) => {
-          contract.rectangles.call(i).then((rawRect) => this.addPermanentItem(rawRectToItem(rawRect)))
+          contract.shapes.call(i).then((rawShape) => this.addPermanentItem(rawShapeToItem(rawShape)))
         })
       })
     })

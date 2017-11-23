@@ -2,21 +2,6 @@ import { v4 } from 'uuid';
 
 export const TOOL_LINE = 'line';
 
-export const rawToLineItem = (data) => ({
-  id: v4(),
-  tool: TOOL_LINE,
-  color: `#${data[1].slice(2)}`,
-  size: Number(data[2]),
-  start: {
-    x: Number(data[3]),
-    y: Number(data[4]),
-  },
-  end: {
-    x: Number(data[5]),
-    y: Number(data[6]),
-  },
-})
-
 export default (context) => {
   let line = null;
   let imageData = null;

@@ -1,3 +1,6 @@
+import { v4 } from 'uuid';
+
+import { revert } from './object';
 import { 
   TOOL_LINE, 
   TOOL_RECTANGLE, 
@@ -9,6 +12,8 @@ const toolToId = {
   [TOOL_RECTANGLE]: 1,
   [TOOL_ELLIPSE]: 2,
 };
+
+const idToTool = revert(toolToId);
 
 export const itemsToShapes = (stagedItems) => {
   const numOfItems = stagedItems.length;
@@ -33,3 +38,19 @@ export const itemsToShapes = (stagedItems) => {
     endYs: Array(numOfItems),
   });
 };
+
+export const rawShapeToItem = (data) => ({
+  id: v4(),
+  tool: idToTool[Number(data[1])],
+  color: `#${data[2].slice(2)}`,
+  fill: `#${data[3].slice(2)}`,
+  size: Number(data[4]),
+  start: {
+    x: Number(data[5]),
+    y: Number(data[6]),
+  },
+  end: {
+    x: Number(data[7]),
+    y: Number(data[8]),
+  },
+});

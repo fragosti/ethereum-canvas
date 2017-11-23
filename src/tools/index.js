@@ -16,11 +16,9 @@ export {
 export {
   default as line,
   TOOL_LINE,
-  rawToLineItem,
 } from './line';
 
 export {
   default as rectangle,
   TOOL_RECTANGLE,
-  rawRectToItem,
 } from './rectangle'
