@@ -1,8 +1,8 @@
 pragma solidity ^0.4.11;
 
 contract EthereumCanvas {
-  // .0001 ETH
-  uint constant pixelPrice = 100000000000000;
+  // .0000001 ETH
+  uint constant pixelPrice = 100000000000;
   uint constant pi = 3;
 
   struct Shape {
@@ -16,6 +16,10 @@ contract EthereumCanvas {
     uint endX;
     uint endY;
   }
+
+  event ShapeDrawn (
+    Shape shape
+  );
 
   Shape[] public shapes;
 
@@ -43,7 +47,7 @@ contract EthereumCanvas {
   function calculateRectanglePrice(Shape rec) pure internal returns (uint) {
     uint dx = rec.endX > rec.startX ? rec.endX - rec.startX : rec.startX - rec.endX;
     uint dy = rec.endY > rec.startY ? rec.endY - rec.startY : rec.startY - rec.endY;
-    return dx*dy;
+    return dx*dy*pixelPrice;
   }
 
   function calculateEllipsePrice(Shape el) pure internal returns (uint) {
@@ -77,6 +81,7 @@ contract EthereumCanvas {
         totalCost += calculateEllipsePrice(shape);
       }
       shapes.push(shape);
+      ShapeDrawn(shape);
     }
     require(msg.value >= totalCost);
   }

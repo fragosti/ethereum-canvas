@@ -44,7 +44,6 @@ const Options = ({ children, onClickClose }) => (
   </StyledFlex>
 )
 
-export const IMAGE_OPTIONS = 'imageOptions';
 export const LINE_OPTIONS = 'lineOptions';
 export const SHAPE_OPTIONS = 'shapeOptions';
 export const ERASE_OPTIONS = 'eraseOptions';
@@ -98,7 +97,6 @@ class Control extends Component {
   selectRectangle = () => this.selectTool(TOOL_RECTANGLE)
   selectEllipse = () => this.selectTool(TOOL_ELLIPSE)
   selectEraser = () => this.selectTool(TOOL_ERASER)
-  selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
   onFillChange = ({ hex }) => this.selectFill(hex)
 
@@ -205,18 +203,10 @@ class Control extends Component {
             onClick={this.selectEllipse}
           >
             Ellipse
-          </Button>  
+          </Button>
           <Button 
             mx='1em' 
-            iconName='Image' 
-            selected={selectedTool === 'image'}
-            onClick={this.selectImage}
-          >
-            Image
-          </Button> 
-          <Button 
-            mx='1em' 
-            iconName='Edit2' 
+            iconName='Trash' 
             selected={selectedTool === ERASE_OPTIONS }
             onClick={this.selectEraser}
           >
