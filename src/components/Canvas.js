@@ -10,6 +10,7 @@ class Canvas extends Component {
     const { 
       color, 
       tool, 
+      fillColor,
       drawThickness,
       items,
       addItem,
@@ -22,6 +23,7 @@ class Canvas extends Component {
           height={1000}
           size={drawThickness}
           color={color}
+          fillColor={fillColor}
           tool={tool}
           items={items}
           onCompleteItem={addItem}

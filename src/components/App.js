@@ -26,11 +26,12 @@ class App extends Component {
   state = {
     selectedTool: TOOL_NONE,
     selectedColor: colors.blue,
+    selectedFill: colors.orange,
+    drawThickness: 1,
     selectedAccount: null,
     selectedOptions: null,
     permanentItems: [],
     stagedItems: [],
-    drawThickness: 1,
   }
 
   componentWillMount() {
@@ -89,7 +90,7 @@ class App extends Component {
   }
 
   render() {
-    const { selectedColor, selectedOptions, drawThickness, selectedTool, selectedAccount, permanentItems } = this.state;
+    const { selectedColor, selectedFill, selectedOptions, drawThickness, selectedTool, selectedAccount, permanentItems } = this.state;
     return (
       <div> 
         <Header/>
@@ -98,6 +99,7 @@ class App extends Component {
             <Control
               selectedTool={selectedTool}
               selectedColor={selectedColor}
+              selectedFill={selectedFill}
               selectedAccount={selectedAccount}
               selectedOptions={selectedOptions}
               claimPixels={this.claimPixels}
@@ -109,6 +111,7 @@ class App extends Component {
             <Canvas
               tool={selectedTool}
               color={selectedColor}
+              fillColor={selectedFill}
               drawThickness={drawThickness}
               items={permanentItems}
               addItem={this.addStagedItem}

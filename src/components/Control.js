@@ -73,12 +73,16 @@ class Control extends Component {
   }
 
   selectTool = (selectedTool) => {
-    this.props.onChange('selectedTool', selectedTool);
-    this.selectOptions(toolsToOptions[selectedTool]);
+    this.props.onChange('selectedTool', selectedTool)
+    this.selectOptions(toolsToOptions[selectedTool])
   }
 
   selectColor = (color) => {
     this.props.onChange('selectedColor', color)
+  }
+
+  selectFill = (color) => {
+    this.props.onChange('selectedFill', color)
   }
 
   selectAccount = (account) => {
@@ -96,10 +100,12 @@ class Control extends Component {
   selectEraser = () => this.selectTool(TOOL_ERASER)
   selectImage = () => this.selectTool('image')
   onColorChange = ({ hex }) => this.selectColor(hex)
+  onFillChange = ({ hex }) => this.selectFill(hex)
 
   optionsToShow = () => {
     const { 
       selectedColor, 
+      selectedFill,
       selectedOptions, 
       selectedAccount, 
       drawThickness, 
@@ -117,25 +123,35 @@ class Control extends Component {
         onChange={this.onColorChange}
       />
     )
+    const thicknessPicker = (
+      <Picker
+        mx='1em'
+        label='Thickness:'
+        name='drawThickness'
+        options={pixelOptions}
+        value={drawThickness}
+        onChange={(_, value) => this.selectDrawThickness(value)}
+      />
+    )
     switch(selectedOptions) {
       case LINE_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
-            <Picker
-              mx='1em'
-              label='Thickness:'
-              name='drawThickness'
-              options={pixelOptions}
-              value={drawThickness}
-              onChange={(_, value) => this.selectDrawThickness(value)}
-            />
+            {thicknessPicker}
           </Options>
         )
       case SHAPE_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
             {colorPicker}
+            <ColorPicker
+              mx='1em'
+              label='Fill:'
+              color={selectedFill}
+              onChange={this.onFillChange}
+            />
+            {thicknessPicker}
           </Options>
         )
       case CLAIM_OPTIONS:
