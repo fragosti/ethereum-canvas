@@ -9,13 +9,16 @@ import {
   TOOL_RECTANGLE, 
   ellipse,
   TOOL_ELLIPSE,
+  eraser,
+  TOOL_ERASER,
 } from '../tools';
 
 export const toolsMap = {
   [TOOL_NONE]: none,
   [TOOL_LINE]: line,
   [TOOL_RECTANGLE]: rectangle,
-  [TOOL_ELLIPSE]: ellipse
+  [TOOL_ELLIPSE]: ellipse,
+  [TOOL_ERASER]: eraser,
 };
 
 export default class SketchPad extends Component {
@@ -70,8 +73,8 @@ export default class SketchPad extends Component {
   }
 
   componentWillReceiveProps({tool, items}) {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     items
-      .filter(item => this.props.items.indexOf(item) === -1)
       .forEach(item => {
         this.initTool(item.tool);
         this.tool.draw(item, this.props.animate);

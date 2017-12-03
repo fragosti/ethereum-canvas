@@ -71,7 +71,6 @@ class App extends Component {
   }
 
   addStagedItem = (item) => {
-    console.log(item);
     const newItems = this.state.stagedItems.concat(item);
     this.setState({ stagedItems: newItems });
   }
@@ -83,7 +82,16 @@ class App extends Component {
   }
 
   render() {
-    const { selectedColor, selectedFill, selectedOptions, drawThickness, selectedTool, selectedAccount, permanentItems } = this.state;
+    const { 
+      selectedColor, 
+      selectedFill, 
+      selectedOptions, 
+      drawThickness, 
+      selectedTool, 
+      selectedAccount, 
+      permanentItems,
+      stagedItems,
+  } = this.state;
     return (
       <div> 
         <Header/>
@@ -106,7 +114,7 @@ class App extends Component {
               color={selectedColor}
               fillColor={selectedFill}
               drawThickness={drawThickness}
-              items={permanentItems}
+              items={permanentItems.concat(stagedItems)}
               addItem={this.addStagedItem}
             />
           </Box>
