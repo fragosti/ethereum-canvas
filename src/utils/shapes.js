@@ -12,6 +12,7 @@ const toolToId = {
   [TOOL_RECTANGLE]: 1,
   [TOOL_ELLIPSE]: 2,
 };
+console.log(toolToId)
 
 const idToTool = revert(toolToId);
 
@@ -39,6 +40,24 @@ export const centerPoint = (startPoint, endPoint) => {
     x: Math.min(endPoint.x, startPoint.x) + dxToCenter,
     y: Math.min(endPoint.y, startPoint.y) + dyToCenter,
   }
+};
+
+export const doesIntersectEllipse = (item, x, y) => {
+  const radius = distanceBetween(item.start, item.end) / 2;
+  const center = centerPoint(item.start, item.end);
+  return distanceBetween({x, y}, center) <= radius;
+}
+
+export const doesIntersectRectangle = (item, x, y) => {
+  return isBetween({ x, y }, item.start, item.end);
+}
+
+export const doesIntersectLine = (item, x, y) => {
+  const deltas1 = deltas(item.start, item.end);
+  const deltas2 = deltas({ x, y }, item.end);
+  const slope1 = deltas1.dy / deltas1.dx;
+  const slope2 = deltas2.dy / deltas2.dx;
+  return isBetween({ x, y }, item.start, item.end) && slope1 === slope2;
 }
 
 export const itemsToShapes = (stagedItems) => {

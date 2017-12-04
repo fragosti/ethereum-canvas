@@ -1,13 +1,6 @@
 import { v4 } from 'uuid';
-import { distanceBetween, centerPoint } from '../utils/shapes';
 
 export const TOOL_ELLIPSE = 'ellipse';
-
-export const doesIntersect = (item, x, y) => {
-  const radius = distanceBetween(item.start, item.end) / 2;
-  const center = centerPoint(item.start, item.end);
-  return distanceBetween({x, y}, center) <= radius;
-}
 
 export default (context) => {
   let ellipse = null;

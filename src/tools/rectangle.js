@@ -1,11 +1,6 @@
 import { v4 } from 'uuid';
-import { isBetween } from '../utils/shapes';
 
 export const TOOL_RECTANGLE = 'rectangle';
-
-export const doesIntersect = (item, x, y) => {
-  return isBetween({ x, y }, item.start, item.end);
-}
 
 export default (context) => {
   let rectangle = null;

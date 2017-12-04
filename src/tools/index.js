@@ -1,25 +1,18 @@
+import none, { TOOL_NONE } from './none';
+import eraser, { TOOL_ERASER } from './eraser';
+import ellipse, { TOOL_ELLIPSE } from './ellipse';
+import line, { TOOL_LINE } from './line';
+import rectangle, { TOOL_RECTANGLE } from './rectangle'; 
+
 export {
-  default as none,
+  none,
   TOOL_NONE,
-} from './none';
-
-export {
-  default as eraser,
+  eraser,
   TOOL_ERASER,
-} from './eraser';
-
-export {
-  default as ellipse,
+  ellipse,
   TOOL_ELLIPSE,
-  doesIntersect as doesIntersectEllipse,
-} from './ellipse';
-
-export {
-  default as line,
+  line,
   TOOL_LINE,
-} from './line';
-
-export {
-  default as rectangle,
+  rectangle,
   TOOL_RECTANGLE,
-} from './rectangle'
+}
