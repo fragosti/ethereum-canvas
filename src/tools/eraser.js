@@ -1,77 +1,46 @@
-import { v4 } from 'uuid';
+import { doesIntersect as doesIntersectEllipse } from './ellipse';
+import { doesIntersect  as doesIntersectRectangle } from './rectangle';
+import { doesIntersect as doesIntersectLine } from './line';
 
 export const TOOL_ERASER = 'eraser';
 
-export default (context) => {
-  let stroke = null;
-  let points = [];
+let mouseIsDown = false;
+
+export default (context, items, setItems) => {
+
+  const removeLastItemAddedAt = (x, y) => {
+    let foundOne = false;
+    const newItems = items.slice().reverse().filter((item) => {
+      if (!foundOne && (
+          doesIntersectEllipse(item, x, y) ||
+          doesIntersectLine(item, x, y) ||
+          doesIntersectRectangle(item, x, y)
+          )
+        ) {
+        foundOne = true;
+        return false; 
+      }
+      return true;
+    }).reverse();
+    return setItems(newItems);
+  }
 
   const onMouseDown = (x, y, color, size) => {
-    stroke = {
-      id: v4(),
-      tool: TOOL_ERASER,
-      color,
-      size,
-      points: [{ x, y }]
-    };
-    return [stroke];
-  };
-
-  const drawLine = (item, start, { x, y }) => {
-    context.save();
-    context.lineJoin = 'round';
-    context.lineCap = 'round';
-    context.beginPath();
-    context.lineWidth = item.size;
-    context.strokeStyle = item.color;
-    context.globalCompositeOperation = 'source-over';
-    context.moveTo(start.x, start.y);
-    context.lineTo(x, y);
-    context.closePath();
-    context.stroke();
-    context.restore();
+    mouseIsDown = true;
+    removeLastItemAddedAt(x, y);
   };
 
   const onMouseMove = (x, y) => {
-    if (!stroke) return [];
-    const newPoint = { x, y };
-    const start = stroke.points.slice(-1)[0];
-    drawLine(stroke, start, newPoint);
-    stroke.points.push(newPoint);
-    points.push(newPoint);
-
-    return [stroke];
+    mouseIsDown && removeLastItemAddedAt(x, y);
   };
 
-  const onDebouncedMouseMove = () => {
-    const debouncedPoints = points;
-    points = [];
-    return [stroke, debouncedPoints];
-  };
+  const onDebouncedMouseMove = () => {};
 
   const onMouseUp = (x, y) => {
-    if (!stroke) return;
-    onMouseMove(x, y);
-    points = [];
-    const item = stroke;
-    stroke = null;
-    return [item];
+    mouseIsDown = false;
   };
 
-  const draw = (item, animate) => {
-    let time = 0;
-    let i = 0;
-    const j = item.points.length;
-    for (i, j; i < j; i++) {
-      if (!item.points[i - 1]) continue;
-      if (animate) {
-        setTimeout(drawLine.bind(null, item, item.points[i - 1], item.points[i]), time);
-        time += 10;
-      } else {
-        drawLine(item, item.points[i - 1], item.points[i]);
-      }
-    }
-  };
+  const draw = (item, animate) => {};
 
   return {
     onMouseDown,

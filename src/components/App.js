@@ -65,6 +65,8 @@ class App extends Component {
     });
   }
 
+  setStagedItems = (stagedItems) => this.setState({ stagedItems }) 
+
   addPermanentItem = (item) => {
     const newItems = this.state.permanentItems.concat(item);
     this.setState({ permanentItems: newItems });
@@ -114,7 +116,9 @@ class App extends Component {
               color={selectedColor}
               fillColor={selectedFill}
               drawThickness={drawThickness}
-              items={permanentItems.concat(stagedItems)}
+              stagedItems={stagedItems}
+              setStagedItems={this.setStagedItems}
+              allItems={permanentItems.concat(stagedItems)}
               addItem={this.addStagedItem}
             />
           </Box>

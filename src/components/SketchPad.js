@@ -29,7 +29,8 @@ export default class SketchPad extends Component {
   static propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
-    items: PropTypes.array.isRequired,
+    allItems: PropTypes.array.isRequired,
+    setItems: PropTypes.func,
     animate: PropTypes.bool,
     canvasClassName: PropTypes.string,
     color: PropTypes.string,
@@ -67,23 +68,24 @@ export default class SketchPad extends Component {
   }
 
   componentDidMount() {
+    const { tool, stagedItems, setStagedItems } = this.props;
     this.canvas = findDOMNode(this.canvasRef);
     this.ctx = this.canvas.getContext('2d');
-    this.initTool(this.props.tool);
+    this.initTool(tool, stagedItems, setStagedItems);
   }
 
-  componentWillReceiveProps({tool, items}) {
+  componentWillReceiveProps({tool, allItems, stagedItems, setStagedItems}) {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    items
+    allItems
       .forEach(item => {
-        this.initTool(item.tool);
+        this.initTool(item.tool, stagedItems, setStagedItems);
         this.tool.draw(item, this.props.animate);
       });
-    this.initTool(tool);
+    this.initTool(tool, stagedItems, setStagedItems);
   }
 
-  initTool(tool) {
-    this.tool = this.props.toolsMap[tool](this.ctx);
+  initTool(tool, items, setItems) {
+    this.tool = this.props.toolsMap[tool](this.ctx, items, setItems);
   }
 
   onMouseDown(e) {

@@ -11,6 +11,7 @@ export {
 export {
   default as ellipse,
   TOOL_ELLIPSE,
+  doesIntersect as doesIntersectEllipse,
 } from './ellipse';
 
 export {

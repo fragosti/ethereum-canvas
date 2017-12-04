@@ -12,7 +12,9 @@ class Canvas extends Component {
       tool, 
       fillColor,
       drawThickness,
-      items,
+      stagedItems,
+      setStagedItems,
+      allItems,
       addItem,
       className,
     } = this.props;
@@ -25,7 +27,9 @@ class Canvas extends Component {
           color={color}
           fillColor={fillColor}
           tool={tool}
-          items={items}
+          stagedItems={stagedItems}
+          setStagedItems={setStagedItems}
+          allItems={allItems}
           onCompleteItem={addItem}
         />
       </Island>

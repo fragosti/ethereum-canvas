@@ -1,6 +1,15 @@
 import { v4 } from 'uuid';
+import { deltas, isBetween } from '../utils/shapes';
 
 export const TOOL_LINE = 'line';
+
+export const doesIntersect = (item, x, y) => {
+  const deltas1 = deltas(item.start, item.end);
+  const deltas2 = deltas({ x, y }, item.end);
+  const slope1 = deltas1.dy / deltas1.dx;
+  const slope2 = deltas2.dy / deltas2.dx;
+  return isBetween({ x, y }, item.start, item.end) && slope1 === slope2;
+}
 
 export default (context) => {
   let line = null;
