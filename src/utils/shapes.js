@@ -12,53 +12,39 @@ const toolToId = {
   [TOOL_RECTANGLE]: 1,
   [TOOL_ELLIPSE]: 2,
 };
-console.log(toolToId)
 
 const idToTool = revert(toolToId);
 
-export const deltas = (startPoint, endPoint) => {
-  const dx = endPoint.x - startPoint.x;
-  const dy = endPoint.y - startPoint.y;
-  return { dx, dy }
-}
-
-export const isBetween = (point, startPoint, endPoint) => {
-  const isBetweenX = point.x >= Math.min(startPoint.x, endPoint.x) && point.x <= Math.max(startPoint.x, endPoint.x);
-  const isBetweenY = point.y >= Math.min(startPoint.y, endPoint.y) && point.y <= Math.max(startPoint.y, endPoint.y);
-  return isBetweenX && isBetweenY;
+const numberOfPixelsInLine = ({start, end, size}) => {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  return Math.ceil(Math.sqrt(dx**2 + dy**2)*size);
 };
 
-export const distanceBetween = (startPoint, endPoint) => {
-  const { dx, dy } = deltas(startPoint, endPoint);
-  return Math.sqrt(dx**2 + dy**2);
+const numberOfPixelsInRectangle = ({start, end}) => {
+  const w = Math.abs(end.x - start.x);
+  const h = Math.abs(end.y - start.y);
+  return w*h;
 };
 
-export const centerPoint = (startPoint, endPoint) => {
-  const dxToCenter = Math.abs(endPoint.x - startPoint.x) / 2;
-  const dyToCenter = Math.abs(endPoint.y - startPoint.y) / 2;
-  return {
-    x: Math.min(endPoint.x, startPoint.x) + dxToCenter,
-    y: Math.min(endPoint.y, startPoint.y) + dyToCenter,
+const numberOfPixelsInEllipse = (item) => {
+  return Math.round(numberOfPixelsInRectangle(item)*3/4);
+};
+
+export const numberOfPixels = (item) => {
+  switch(item.tool) {
+    case TOOL_LINE:
+      return numberOfPixelsInLine(item);
+    case TOOL_RECTANGLE:
+      return numberOfPixelsInRectangle(item);
+    case TOOL_ELLIPSE:
+      return numberOfPixelsInEllipse(item);
+    default:
+      throw new Error(`Did not pass in valid item: ${item}`);
   }
 };
 
-export const doesIntersectEllipse = (item, x, y) => {
-  const radius = distanceBetween(item.start, item.end) / 2;
-  const center = centerPoint(item.start, item.end);
-  return distanceBetween({x, y}, center) <= radius;
-}
-
-export const doesIntersectRectangle = (item, x, y) => {
-  return isBetween({ x, y }, item.start, item.end);
-}
-
-export const doesIntersectLine = (item, x, y) => {
-  const deltas1 = deltas(item.start, item.end);
-  const deltas2 = deltas({ x, y }, item.end);
-  const slope1 = deltas1.dy / deltas1.dx;
-  const slope2 = deltas2.dy / deltas2.dx;
-  return isBetween({ x, y }, item.start, item.end) && slope1 === slope2;
-}
+export const totalPixels = (items) => items.reduce((acc, item) => acc + numberOfPixels(item), 0);
 
 export const itemsToShapes = (stagedItems) => {
   const numOfItems = stagedItems.length;

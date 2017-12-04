@@ -7,8 +7,9 @@ import {
   TOOL_NONE,
 } from '../tools';
 import { colors } from '../style/utils';
+import { pixelWeiPrice } from '../constants/price';
 import { range } from '../utils/array';
-import { itemsToShapes, rawShapeToItem } from '../utils/shapes';
+import { itemsToShapes, rawShapeToItem, totalPixels } from '../utils/shapes';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
@@ -33,8 +34,11 @@ class App extends Component {
   }
 
   componentWillMount() {
+    this.drawPermanentShapes()
+  }
+
+  drawPermanentShapes() {
     getContract().then((contract) => {
-      window.contract = contract;
       contract.getNumberOfShapes.call().then((length) => {
         range(Number(length)).forEach((i) => {
           contract.shapes.call(i).then((rawShape) => this.addPermanentItem(rawShapeToItem(rawShape)))
@@ -55,13 +59,17 @@ class App extends Component {
       endXs,
       endYs,
     } = itemsToShapes(stagedItems);
+    const price = this.price();
+    console.log(price)
     return getContract().then((contract) => {
-      contract.drawShapes(shapeIds, colors, fills, sizes, startXs, startYs, endXs, endYs, {
-        // TODO: Calculate value & gas.
-        value: 100000000000000000,
+      return contract.drawShapes(shapeIds, colors, fills, sizes, startXs, startYs, endXs, endYs, {
+        value: price,
         gas: 6385876,
         from: selectedAccount
       });
+    }).then(() => {
+      this.setStagedItems([]);
+      this.drawPermanentShapes();
     });
   }
 
@@ -83,6 +91,8 @@ class App extends Component {
     })
   }
 
+  price = () => totalPixels(this.state.stagedItems)*pixelWeiPrice;
+
   render() {
     const { 
       selectedColor, 
@@ -93,7 +103,7 @@ class App extends Component {
       selectedAccount, 
       permanentItems,
       stagedItems,
-  } = this.state;
+    } = this.state;
     return (
       <div> 
         <Header/>
@@ -108,6 +118,7 @@ class App extends Component {
               claimPixels={this.claimPixels}
               drawThickness={drawThickness}
               onChange={this.changeSetting}
+              price={this.price()}
             />
           </Box>
           <Box is='section' m={modularScale(1)}>

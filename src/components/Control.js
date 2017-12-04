@@ -9,6 +9,7 @@ import Island from './Island';
 import Button from './Button';
 import ColorPicker from './ColorPicker';
 import Picker from './Picker';
+import { toEther } from '../utils/price';
 import { colors } from '../style/utils';
 import getAccounts from '../utils/getAccounts';
 import { 
@@ -30,6 +31,20 @@ const Close = styled.span`
   right: 0px;
   cursor: pointer;
 `
+
+const Info = styled.div`
+  margin: 0 1em;
+  align-self: flex-start;
+  padding: 3px;
+  label {
+    font-weight: 700;
+  }
+  div {
+    font-size: 1.5em;
+    margin-top: 6px;
+  }
+`
+
 
 const Options = ({ children, onClickClose }) => (
   <StyledFlex 
@@ -107,7 +122,8 @@ class Control extends Component {
       selectedOptions, 
       selectedAccount, 
       drawThickness, 
-      claimPixels 
+      claimPixels,
+      price,
     } = this.props;
     const { accounts } = this.state;
     if (!selectedOptions) return null;
@@ -155,6 +171,10 @@ class Control extends Component {
       case CLAIM_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
+            <Info>
+              <label>Price (wei / ether):</label>
+              <div>{price} / {toEther(price)}</div>
+            </Info>
             <Picker
               mx='1em'
               label='Account:'
