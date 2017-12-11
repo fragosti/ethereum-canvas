@@ -2,7 +2,7 @@ import getWeb3 from './getWeb3';
 import EthereumCanvasContract from '../../build/contracts/EthereumCanvas.json';
 import TruffleContract from 'truffle-contract';
 
-var contract;
+let contract;
 
 const getContract = () => {
   if (contract) {
@@ -13,7 +13,7 @@ const getContract = () => {
     canvasContract.setProvider(web3.currentProvider);
     return canvasContract.deployed().then((instance) => {
       contract = instance;
-      return instance;
+      return contract;
     });
   }).catch((e) => {
     console.error(e);

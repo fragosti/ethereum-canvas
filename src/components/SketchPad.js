@@ -78,7 +78,6 @@ export default class SketchPad extends Component {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     allItems
       .forEach(item => {
-        console.log(item)
         this.initTool(item.tool, stagedItems, setStagedItems);
         this.tool.draw(item, this.props.animate);
       });

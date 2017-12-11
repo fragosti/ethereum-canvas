@@ -25,23 +25,14 @@ contract EthereumCanvas {
 
   mapping(address => uint) public pendingRefunds;
 
-  function sqrt(uint x) pure internal returns (uint y) {
-    uint z = (x + 1) / 2;
-    y = x;
-    while (z < y) {
-        y = z;
-        z = (x / z + z) / 2;
-    }
-  }
-
   function getNumberOfShapes() view public returns (uint) {
     return shapes.length;
   }  
 
   function calculateLinePrice(Shape line) pure internal returns (uint) {
-    uint dx = line.endX - line.startX;
-    uint dy = line.endY - line.endX;
-    return line.size*sqrt(dx*dx + dy*dy)*pixelPrice;
+    uint dx = line.endX > line.startX ? line.endX - line.startX : line.startX - line.endX;
+    uint dy = line.endY > line.startY ? line.endY - line.startY : line.startY - line.endY;
+    return line.size*(dx + dy)*pixelPrice;
   }
 
   function calculateRectanglePrice(Shape rec) pure internal returns (uint) {

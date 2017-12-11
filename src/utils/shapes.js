@@ -16,9 +16,9 @@ const toolToId = {
 const idToTool = revert(toolToId);
 
 const numberOfPixelsInLine = ({start, end, size}) => {
-  const dx = end.x - start.x;
-  const dy = end.y - start.y;
-  return Math.ceil(Math.sqrt(dx**2 + dy**2)*size);
+  const dx = Math.abs(end.x - start.x);
+  const dy = Math.abs(end.y - start.y);
+  return (dx + dy)*size;
 };
 
 const numberOfPixelsInRectangle = ({start, end}) => {
@@ -53,10 +53,10 @@ export const itemsToShapes = (stagedItems) => {
     acc.colors[i] = '0x' + val.color.slice(1);
     acc.fills[i] = val.fill ? ('0x' + val.fill.slice(1)) : undefined;
     acc.sizes[i] = val.size;
-    acc.startXs[i] = val.start.x;
-    acc.startYs[i] = val.start.y;
-    acc.endXs[i] = val.end.x;
-    acc.endYs[i] = val.end.y;
+    acc.startXs[i] = Math.round(val.start.x);
+    acc.startYs[i] = Math.round(val.start.y);
+    acc.endXs[i] = Math.round(val.end.x);
+    acc.endYs[i] = Math.round(val.end.y);
     return acc;
   }, {
     shapeIds: Array(numOfItems),

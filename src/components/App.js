@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { modularScale } from 'polished';
-import getContract from '../utils/getContract';
 import { Flex, Box } from 'grid-styled';
 
 import { 
   TOOL_NONE,
 } from '../tools';
+import getContract from '../utils/getContract';
 import { colors } from '../style/utils';
-import { pixelWeiPrice } from '../constants/price';
+import { pixelWeiPrice, gasPerShape } from '../constants/price';
 import { range } from '../utils/array';
 import { itemsToShapes, rawShapeToItem, totalPixels } from '../utils/shapes';
 import Header from './Header';
@@ -37,8 +37,9 @@ class App extends Component {
     this.drawPermanentShapes()
   }
 
-  drawPermanentShapes() {
+  drawPermanentShapes = () => {
     getContract().then((contract) => {
+      window.contract = contract;
       contract.getNumberOfShapes.call().then((length) => {
         range(Number(length)).forEach((i) => {
           contract.shapes.call(i).then((rawShape) => this.addPermanentItem(rawShapeToItem(rawShape)))
@@ -46,6 +47,7 @@ class App extends Component {
       })
     })
   }
+
 
   claimPixels = () => {
     const { selectedAccount, stagedItems } = this.state;
@@ -60,16 +62,19 @@ class App extends Component {
       endYs,
     } = itemsToShapes(stagedItems);
     const price = this.price();
-    console.log(price)
     return getContract().then((contract) => {
       return contract.drawShapes(shapeIds, colors, fills, sizes, startXs, startYs, endXs, endYs, {
         value: price,
-        gas: 6385876,
+        gas: this.estimatedGas(),
         from: selectedAccount
       });
     }).then(() => {
       this.setStagedItems([]);
-      this.drawPermanentShapes();
+      // TODO: Show transaction on etherscan. 
+    }).catch((error) => {
+      // TODO: Handle error;
+      this.setStagedItems([]);
+      console.log(error);
     });
   }
 
@@ -82,7 +87,7 @@ class App extends Component {
 
   addStagedItem = (item) => {
     const newItems = this.state.stagedItems.concat(item);
-    this.setState({ stagedItems: newItems });
+    this.setState({ stagedItems: newItems }, this.updateEstimatedGas);
   }
 
   changeSetting = (name, value) => {
@@ -92,6 +97,7 @@ class App extends Component {
   }
 
   price = () => totalPixels(this.state.stagedItems)*pixelWeiPrice;
+  estimatedGas = () => this.state.stagedItems.length * gasPerShape;
 
   render() {
     const { 

@@ -1,0 +1,1 @@
+export const toEther = (wei) => wei / 1000000000000000000;
