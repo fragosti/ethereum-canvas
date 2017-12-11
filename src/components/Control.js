@@ -123,7 +123,6 @@ class Control extends Component {
       selectedAccount, 
       drawThickness, 
       claimPixels,
-      price,
     } = this.props;
     const { accounts } = this.state;
     if (!selectedOptions) return null;
@@ -171,10 +170,6 @@ class Control extends Component {
       case CLAIM_OPTIONS:
         return (
           <Options onClickClose={this.selectNone}>
-            <Info>
-              <label>Price (wei / ether):</label>
-              <div>{price} / {toEther(price)}</div>
-            </Info>
             <Picker
               mx='1em'
               label='Account:'
@@ -196,9 +191,15 @@ class Control extends Component {
   }
 
   render() {
-    const { className, selectedTool } = this.props;
+    const { className, selectedTool, price, } = this.props;
     return (
       <Island className={className}>
+        <Flex justify='center' mb='1em'>
+          <Info>
+            <label>Price (wei / ether):</label>
+            <div>{price} / {toEther(price)}</div>
+          </Info>
+        </Flex>
         <Box>
           <Button 
             mx='1em' 

@@ -110,6 +110,7 @@ class App extends Component {
       permanentItems,
       stagedItems,
     } = this.state;
+    console.log(permanentItems)
     return (
       <div> 
         <Header/>

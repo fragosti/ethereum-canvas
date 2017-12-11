@@ -72,6 +72,7 @@ export const itemsToShapes = (stagedItems) => {
 
 export const rawShapeToItem = (data) => ({
   id: v4(),
+  owner: data[0],
   tool: idToTool[Number(data[1])],
   color: `#${data[2].slice(2)}`,
   fill: `#${data[3].slice(2)}`,
