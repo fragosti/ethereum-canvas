@@ -3,7 +3,7 @@
   "build_command": "npm run build",
   "upload_directory": "build_webpack",
   "index_key": "index.html",
-  "error_key": "404.html",
+  "error_key": "index.html",
   "trailing_slashes": false,
   "cache": 3600,
   "aws_profile": "default",

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { modularScale } from 'polished'
+import { modularScale } from 'polished';
 import { Box, Flex } from 'grid-styled';
 import { X } from 'react-feather';
 import { space } from 'styled-system';
@@ -8,8 +8,8 @@ import { space } from 'styled-system';
 import Island from './Island';
 import Button from './Button';
 import ColorPicker from './ColorPicker';
+import PriceTicker from './PriceTicker';
 import Picker from './Picker';
-import { toEther } from '../utils/price';
 import { colors } from '../style/utils';
 import getAccounts from '../utils/getAccounts';
 import { 
@@ -30,19 +30,6 @@ const Close = styled.span`
   top: 10px;
   right: 0px;
   cursor: pointer;
-`
-
-const Info = styled.div`
-  margin: 0 1em;
-  align-self: flex-start;
-  padding: 3px;
-  label {
-    font-weight: 700;
-  }
-  div {
-    font-size: 1.5em;
-    margin-top: 6px;
-  }
 `
 
 
@@ -194,12 +181,7 @@ class Control extends Component {
     const { className, selectedTool, price, } = this.props;
     return (
       <Island className={className}>
-        <Flex justify='center' mb='1em'>
-          <Info>
-            <label>Price (wei / ether):</label>
-            <div>{price} / {toEther(price)}</div>
-          </Info>
-        </Flex>
+        <PriceTicker weiPrice={price} />
         <Box>
           <Button 
             mx='1em' 
