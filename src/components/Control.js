@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
 import { Box, Flex } from 'grid-styled';
-import { X } from 'react-feather';
 import { space } from 'styled-system';
 
 import Island from './Island';
 import Button from './Button';
+import Close from './Close';
 import ColorPicker from './ColorPicker';
 import PriceTicker from './PriceTicker';
 import Picker from './Picker';
@@ -25,14 +25,6 @@ const StyledFlex = Flex.extend`
   position: relative;
 `
 
-const Close = styled.span`
-  position: absolute;
-  top: 10px;
-  right: 0px;
-  cursor: pointer;
-`
-
-
 const Options = ({ children, onClickClose }) => (
   <StyledFlex 
     justify='center'
@@ -42,7 +34,7 @@ const Options = ({ children, onClickClose }) => (
     px={modularScale(2)}
   >
     {children}
-    <Close onClick={onClickClose}><X/></Close>
+    <Close onClick={onClickClose}/>
   </StyledFlex>
 )
 

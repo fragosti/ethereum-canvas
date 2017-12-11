@@ -13,6 +13,7 @@ import { itemsToShapes, rawShapeToItem, totalPixels } from '../utils/shapes';
 import Header from './Header';
 import Canvas from './Canvas';
 import Footer from './Footer';
+import Introduction from './Introduction';
 import Control from './Control';
 
 
@@ -115,6 +116,9 @@ class App extends Component {
       <div> 
         <Header/>
         <MainFlex align='center' justify='center' is='main' direction='column'>
+          <Box is='section'>
+            <Introduction mt={modularScale(1)}/>
+          </Box>
           <Box is='section' mt={modularScale(1)}>
             <Control
               selectedTool={selectedTool}
