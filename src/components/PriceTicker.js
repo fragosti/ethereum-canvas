@@ -22,7 +22,7 @@ class PriceTicker extends Component {
     const usdPrice = ethUsd ? ethPrice*ethUsd : 'finding...' ;
     return  (
       <Flex justify='center' direction='column' align='center' mb='2em'>
-        <Title mb={10}>Price: </Title>
+        <Title>Price: </Title>
         <Box>
           <Description mx='1em'>{weiPrice} wei</Description>|
           <Description mx='1em'>{ethPrice} eth</Description>|
