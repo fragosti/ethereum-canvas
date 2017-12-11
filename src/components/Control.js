@@ -12,6 +12,7 @@ import PriceTicker from './PriceTicker';
 import Picker from './Picker';
 import { colors } from '../style/utils';
 import getAccounts from '../utils/getAccounts';
+import { range } from '../utils/array';
 import { 
   TOOL_LINE, 
   TOOL_RECTANGLE, 
@@ -105,7 +106,7 @@ class Control extends Component {
     } = this.props;
     const { accounts } = this.state;
     if (!selectedOptions) return null;
-    const pixelOptions = [1,2,3,4,5,6,7,8,9,10].map(v => ({ value: v, label: `${v}px` }))
+    const pixelOptions = range(30).map(v => ({ value: v, label: `${v}px` }))
     const accountOptions = accounts.map(v => ({ value: v, label: v }))
     const colorPicker = (
       <ColorPicker

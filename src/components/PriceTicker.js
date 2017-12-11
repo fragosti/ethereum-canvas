@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { Box, Flex } from 'grid-styled';
-import { space } from 'styled-system';
 
-import { colors } from '../style/utils';
+import { Title, Description } from './Text';
 import { toEther, etherUsd } from '../utils/price';
 
-const Label = styled.label`
-  font-weight: 700;
-  ${space}
-`
-
-const Price = styled.span`
-  font-size: 1.5em;
-  display: inline-block;
-  color: ${colors.grayText};
-  ${space}
-`;
 
 class PriceTicker extends Component {
   state = {
@@ -35,11 +22,11 @@ class PriceTicker extends Component {
     const usdPrice = ethUsd ? ethPrice*ethUsd : 'finding...' ;
     return  (
       <Flex justify='center' direction='column' align='center' mb='2em'>
-        <Label mb='1em'>Price: </Label>
+        <Title mb={10}>Price: </Title>
         <Box>
-          <Price mx='1em'>{weiPrice} wei</Price>|
-          <Price mx='1em'>{ethPrice} eth</Price>|
-          <Price mx='1em'>${usdPrice}</Price>
+          <Description mx='1em'>{weiPrice} wei</Description>|
+          <Description mx='1em'>{ethPrice} eth</Description>|
+          <Description mx='1em'>${usdPrice}</Description>
         </Box>
       </Flex>
     )
