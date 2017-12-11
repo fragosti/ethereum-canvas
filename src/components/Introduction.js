@@ -4,6 +4,7 @@ import { modularScale } from 'polished';
 import { space } from 'styled-system';
 
 import DismissableIsland from './DismissableIsland';
+import Link from './Link';
 import { Description, Title } from './Text';
 
 const Introduction = ({ className }) => (
@@ -20,6 +21,9 @@ const Introduction = ({ className }) => (
     </Description>
     <Description>
       Anything you draw will remain on the blockchain forever. 💫
+    </Description>
+    <Description>
+      More questions? Check out the <Link>FAQ</Link> or <Link>HowTo</Link>
     </Description>
   </DismissableIsland> 
 )

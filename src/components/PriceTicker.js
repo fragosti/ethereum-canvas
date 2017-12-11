@@ -25,7 +25,7 @@ class PriceTicker extends Component {
         <Title>Price: </Title>
         <Box>
           <Description mx='1em'>{weiPrice} wei</Description>|
-          <Description mx='1em'>{ethPrice} eth</Description>|
+          <Description mx='1em'>{ethPrice} ether</Description>|
           <Description mx='1em'>${usdPrice}</Description>
         </Box>
       </Flex>

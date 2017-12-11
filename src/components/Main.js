@@ -13,6 +13,7 @@ import { itemsToShapes, rawShapeToItem, totalPixels } from '../utils/shapes';
 import Canvas from './Canvas';
 import Introduction from './Introduction';
 import Control from './Control';
+import Confirmation from './Confirmation';
 
 
 const MainFlex = Flex.extend`
@@ -30,6 +31,7 @@ class Main extends Component {
     selectedOptions: null,
     permanentItems: [],
     stagedItems: [],
+    mostRecentTxn: null,
   }
 
   componentWillMount() {
@@ -67,9 +69,9 @@ class Main extends Component {
         gas: this.estimatedGas(),
         from: selectedAccount
       });
-    }).then(() => {
+    }).then(({ tx }) => {
       this.setStagedItems([]);
-      // TODO: Show transaction on etherscan. 
+      this.setState({ mostRecentTxn: tx })
     }).catch((error) => {
       // TODO: Handle error;
       this.setStagedItems([]);
@@ -108,10 +110,12 @@ class Main extends Component {
       selectedAccount, 
       permanentItems,
       stagedItems,
+      mostRecentTxn,
     } = this.state;
     console.log(permanentItems)
     return (
       <MainFlex align='center' justify='center' is='main' direction='column'>
+        {mostRecentTxn && <Confirmation mt={modularScale(1)} txn={mostRecentTxn}/>}
         <Box is='section'>
           <Introduction mt={modularScale(1)}/>
         </Box>

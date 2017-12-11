@@ -15,7 +15,6 @@ export const Description = styled.p`
 export const Title = styled.p`
   color: ${colors.black};
   font-weight: 700;
-  display: inline-block;
   margin-bottom: 10px;
   font-size: ${props => props.size !== undefined ? modularScale(props.size ) : '30px'};
   ${space}
