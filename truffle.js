@@ -18,12 +18,13 @@ module.exports = {
       gasPrice: "20000000000", // 20 gwei
       gas: "2900000", 
     },
-    live: {
-      host: "127.0.0.1",
-      port: 8546,
+    mainnet: {
+      provider: function() {
+        return new HDWalletProvider(process.env.MNEMONIC, "https://mainnet.infura.io/"+process.env.INFURA_TOKEN)
+      },
       network_id: 1, // Only mainnet
       gasPrice: "20000000000", // 20 gwei
-      gas: "4712388", 
+      gas: "2900000", 
     }
   }
 };
