@@ -14,7 +14,7 @@ import Canvas from './Canvas';
 import Introduction from './Introduction';
 import Control from './Control';
 import Confirmation from './Confirmation';
-
+import Warning from './Warning';
 
 const MainFlex = Flex.extend`
   background-color: ${colors.grayBackground};
@@ -32,6 +32,7 @@ class Main extends Component {
     permanentItems: [],
     stagedItems: [],
     mostRecentTxn: null,
+    error: null,
   }
 
   componentWillMount() {
@@ -74,9 +75,8 @@ class Main extends Component {
       this.setState({ mostRecentTxn: txn });
       window.scrollTo(0, 0);
     }).catch((error) => {
-      // TODO: Handle error;
-      this.setStagedItems([]);
-      console.log(error);
+      this.setState({ error: error.message })
+      window.scrollTo(0, 0);
     });
   }
 
@@ -112,11 +112,12 @@ class Main extends Component {
       permanentItems,
       stagedItems,
       mostRecentTxn,
+      error,
     } = this.state;
-    console.log(permanentItems)
     return (
       <MainFlex align='center' justify='center' is='main' direction='column'>
         {mostRecentTxn && <Confirmation mt={modularScale(1)} txn={mostRecentTxn}/>}
+        {error && <Warning mt={modularScale(1)} error={error}/>}
         <Box is='section'>
           <Introduction mt={modularScale(1)}/>
         </Box>
