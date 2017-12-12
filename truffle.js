@@ -13,7 +13,7 @@ module.exports = {
     ropsten:  {
       network_id: 3,
       provider: function() {
-        return new HDWalletProvider(process.env.MNEMONIC, "https://ropsten.infura.io/bXkZ8meNbreNlaufUAkC")
+        return new HDWalletProvider(process.env.MNEMONIC, "https://ropsten.infura.io/"+process.env.INFURA_TOKEN)
       },
       gasPrice: "20000000000", // 20 gwei
       gas: "2900000", 
