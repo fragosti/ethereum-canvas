@@ -22,7 +22,6 @@ const Confirmation = ({ className, txn }) => (
   </DismissableIsland> 
 );
 
-
 export default styled(Confirmation)`
   padding: ${modularScale(2)};
   max-width: 700px;

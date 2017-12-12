@@ -23,7 +23,7 @@ const Introduction = ({ className }) => (
       Anything you draw will remain on the blockchain forever. 💫
     </Description>
     <Description>
-      More questions? Check out the <Link>FAQ</Link> or <Link>HowTo</Link>
+      More questions? Check out the <Link to='faq'>FAQ</Link> or <Link to='howto'>HowTo</Link>
     </Description>
   </DismissableIsland> 
 )
