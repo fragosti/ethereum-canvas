@@ -5,10 +5,12 @@ import {
 } from 'react-router-dom';
 
 import Main from './Main';
+import FAQ from './FAQ';
 import withHeaderFooter from '../HOCs/withHeaderFooter';
 
 
 const MainPage = withHeaderFooter(Main);
+const FAQPage = withHeaderFooter(FAQ);
 
 class App extends Component {
   render() {
@@ -16,6 +18,7 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={MainPage}/>
+          <Route path="/faq" component={FAQPage}/>
         </div>
       </Router>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { modularScale } from 'polished';
-import { Flex, Box } from 'grid-styled';
+import { Box } from 'grid-styled';
 
 import { 
   TOOL_NONE,
@@ -15,10 +15,8 @@ import Introduction from './Introduction';
 import Control from './Control';
 import Confirmation from './Confirmation';
 import Warning from './Warning';
+import Container from './Container';
 
-const MainFlex = Flex.extend`
-  background-color: ${colors.grayBackground};
-`;
 
 class Main extends Component {
 
@@ -115,7 +113,7 @@ class Main extends Component {
       error,
     } = this.state;
     return (
-      <MainFlex align='center' justify='center' is='main' direction='column'>
+      <Container>
         {mostRecentTxn && <Confirmation mt={modularScale(1)} txn={mostRecentTxn}/>}
         {error && <Warning mt={modularScale(1)} error={error}/>}
         <Box is='section'>
@@ -146,7 +144,7 @@ class Main extends Component {
             addItem={this.addStagedItem}
           />
         </Box>
-      </MainFlex>
+      </Container>
     );
   }
 }

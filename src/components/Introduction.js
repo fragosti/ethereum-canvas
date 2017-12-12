@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { modularScale } from 'polished';
 import { space } from 'styled-system';
 
 import DismissableIsland from './DismissableIsland';
@@ -29,7 +28,5 @@ const Introduction = ({ className }) => (
 )
 
 export default styled(Introduction)`
-  padding: ${modularScale(2)};
-  max-width: 700px;
   ${space}
 `

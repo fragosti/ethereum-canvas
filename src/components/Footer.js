@@ -26,9 +26,8 @@ const Footer = ({ className }) => (
       <CenteredContent width={[1/2, 1/3]}>
         <Logo scales={[1/4, 1/3, 1/2]}/>
       </CenteredContent>
-      <Box width={[1/3,1/2]} my='auto'> 
+      <Box width={[1/3, 1/2]} my='auto'> 
         <Flex justify='space-evenly' wrap>
-          <FooterLink to='about'>About</FooterLink>
           <FooterLink to='faq'>FAQ</FooterLink>
           <FooterLink to='howto'>HowTo</FooterLink>
           <FooterLink to='TODO'>Contract</FooterLink>

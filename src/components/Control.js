@@ -233,7 +233,6 @@ class Control extends Component {
 
 
 export default styled(Control)`
-  padding: ${modularScale(2)};
   max-width: 1080px;
   ${space}
 `
