@@ -64,14 +64,15 @@ class Main extends Component {
     } = itemsToShapes(stagedItems);
     const price = this.price();
     return getContract().then((contract) => {
-      return contract.drawShapes(shapeIds, colors, fills, sizes, startXs, startYs, endXs, endYs, {
+      return contract.drawShapes.sendTransaction(shapeIds, colors, fills, sizes, startXs, startYs, endXs, endYs, {
         value: price,
         gas: this.estimatedGas(),
         from: selectedAccount
       });
-    }).then(({ tx }) => {
+    }).then((txn) => {
       this.setStagedItems([]);
-      this.setState({ mostRecentTxn: tx })
+      this.setState({ mostRecentTxn: txn });
+      window.scrollTo(0, 0);
     }).catch((error) => {
       // TODO: Handle error;
       this.setStagedItems([]);

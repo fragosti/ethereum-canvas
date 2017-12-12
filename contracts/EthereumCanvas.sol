@@ -23,7 +23,11 @@ contract EthereumCanvas {
 
   Shape[] public shapes;
 
-  mapping(address => uint) public pendingRefunds;
+  address contractOwner;
+
+  function EthereumCanvas() payable {
+    contractOwner = msg.sender;
+  }
 
   function getNumberOfShapes() view public returns (uint) {
     return shapes.length;
@@ -76,16 +80,9 @@ contract EthereumCanvas {
     }
     require(msg.value >= totalCost);
   }
-  
-  // based on PullPayment.sol
-  function withdrawRefunds() public {
-    address payee = msg.sender;
-    uint payment = pendingRefunds[payee];
-    
-    require(payment != 0);
-    require(this.balance >= payment);
-    
-    pendingRefunds[payee] = 0;
-    require(payee.send(payment));
+
+  function withdraw() public {
+    require(msg.sender == contractOwner);
+    contractOwner.transfer(this.balance);
   }
 }

@@ -17,7 +17,7 @@ const Introduction = ({ className }) => (
       Start drawing using the tools below and press `Claim` when you are ready to save the drawing onto the blockchain.
     </Description>
     <Description>
-      The price per pixel is approximately 0.0000001 ether.
+      The price per pixel is 0.0000001 ether.
     </Description>
     <Description>
       Anything you draw will remain on the blockchain forever. 💫

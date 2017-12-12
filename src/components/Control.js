@@ -46,7 +46,7 @@ export const CLAIM_OPTIONS = 'claimOptions';
 
 const toolsToOptions = {
   [TOOL_NONE]: null,
-  [TOOL_ERASER]: null,
+  [TOOL_ERASER]: ERASE_OPTIONS,
   [TOOL_LINE]: LINE_OPTIONS,
   [TOOL_RECTANGLE]: SHAPE_OPTIONS,
   [TOOL_ELLIPSE]: SHAPE_OPTIONS
@@ -87,6 +87,7 @@ class Control extends Component {
     this.props.onChange('drawThickness', thickness)
   }
 
+  closeOptions = () => this.selectOptions(null)
   selectNone = () => this.selectTool(TOOL_NONE)
   selectLine = () => this.selectTool(TOOL_LINE)
   selectRectangle = () => this.selectTool(TOOL_RECTANGLE)
@@ -129,14 +130,14 @@ class Control extends Component {
     switch(selectedOptions) {
       case LINE_OPTIONS:
         return (
-          <Options onClickClose={this.selectNone}>
+          <Options onClickClose={this.closeOptions}>
             {colorPicker}
             {thicknessPicker}
           </Options>
         )
       case SHAPE_OPTIONS:
         return (
-          <Options onClickClose={this.selectNone}>
+          <Options onClickClose={this.closeOptions}>
             {colorPicker}
             <ColorPicker
               mx='1em'
@@ -149,7 +150,7 @@ class Control extends Component {
         )
       case CLAIM_OPTIONS:
         return (
-          <Options onClickClose={this.selectNone}>
+          <Options onClickClose={this.closeOptions}>
             <Picker
               mx='1em'
               label='Account:'
@@ -163,6 +164,12 @@ class Control extends Component {
               color={colors.blue}
               onClick={claimPixels}
             >Claim Pixels</Button>
+          </Options>
+        )
+      case ERASE_OPTIONS:
+        return (
+          <Options onClickClose={this.closeOptions}>
+            <i>The eraser will only erase things you have drawn in this session that are not saved onto the blockchain. </i>
           </Options>
         )
       default:
