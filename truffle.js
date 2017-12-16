@@ -23,8 +23,8 @@ module.exports = {
         return new HDWalletProvider(process.env.MNEMONIC, "https://mainnet.infura.io/"+process.env.INFURA_TOKEN)
       },
       network_id: 1, // Only mainnet
-      gasPrice: "13000000000",
-      gas: "3500000", 
+      gasPrice: "14000000000",
+      gas: "3000000", 
     }
   }
 };
