@@ -11,10 +11,10 @@ const FAQ = () => (
       <Heading mb={20}>FAQ‍</Heading>
       <Title>How does this work?</Title>
       <Description mb={30}>
-        You'll need the <Link target='_blank' href='https://metamask.io/'>Metamask</Link> chrome extension 
+        You'll need the <Link target='_blank' href='https://metamask.io/'>Metamask</Link> Chrome extension 
         or an Ethereum enabled browser like <Link target='_blank' href='https://github.com/ethereum/mist/releases'>Mist</Link> or <Link target='_blank' href='https://raw.githubusercontent.com/paritytech/scripts/master/get-parity.shs'>Parity</Link> to get started.
         Then, select a tool along with color and fill options to draw on the canvas. Once you're ready press <i>Claim</i> and select the account to use. Then press <i> Claim Pixels</i>.
-        Here is a <Link href='' target='_blank'>GIF</Link>
+        Here is a <Link href='https://gfycat.com/TotalPrestigiousBoar' target='_blank'>GIF</Link>
       </Description>
       <Title>What is the point of this?</Title>
       <Description mb={30}>
