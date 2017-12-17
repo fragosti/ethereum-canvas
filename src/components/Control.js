@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { modularScale } from 'polished';
-import { Box, Flex } from 'grid-styled';
+import { Flex } from 'grid-styled';
 import { space } from 'styled-system';
 
 import Island from './Island';
@@ -182,9 +182,10 @@ class Control extends Component {
     return (
       <Island className={className}>
         <PriceTicker weiPrice={price} />
-        <Box>
+        <Flex wrap justify='center'>
           <Button 
-            mx='1em' 
+            mx='1em'
+            my={['5px', 0, 0]}
             iconName='Edit2' 
             selected={selectedTool === TOOL_LINE}
             onClick={this.selectLine}
@@ -193,6 +194,7 @@ class Control extends Component {
           </Button> 
           <Button 
             mx='1em' 
+            my={['5px', 0, 0]}
             iconName='Square' 
             selected={selectedTool === TOOL_RECTANGLE}
             onClick={this.selectRectangle}
@@ -200,7 +202,8 @@ class Control extends Component {
             Rectangle
           </Button>
           <Button 
-            mx='1em' 
+            mx='1em'
+            my={['5px', 0, 0]} 
             iconName='Circle' 
             selected={selectedTool === TOOL_ELLIPSE}
             onClick={this.selectEllipse}
@@ -209,6 +212,7 @@ class Control extends Component {
           </Button>
           <Button 
             mx='1em' 
+            my={['5px', 0, 0]}
             iconName='Trash' 
             selected={selectedTool === ERASE_OPTIONS }
             onClick={this.selectEraser}
@@ -217,6 +221,7 @@ class Control extends Component {
           </Button> 
           <Button 
             mx='1em' 
+            my={['5px', 0, 0]}
             selected={selectedTool === CLAIM_OPTIONS }
             iconName='Award'
             color={colors.blue}
@@ -224,7 +229,7 @@ class Control extends Component {
           >
             Claim
           </Button> 
-        </Box>
+        </Flex>
         {this.optionsToShow()}
       </Island>
     )

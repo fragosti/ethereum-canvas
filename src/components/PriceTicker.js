@@ -29,8 +29,8 @@ class PriceTicker extends Component {
       <Flex justify='center' direction='column' align='center' mb='2em'>
         <Title>Price: </Title>
         <Box>
-          <Price mx='1em'>{weiPrice} wei</Price>|
-          <Price mx='1em'>{ethPrice} ether</Price>|
+          <Price mx='1em'>{weiPrice} wei</Price>
+          <Price mx='1em'>{ethPrice} ether</Price>
           <Price mx='1em'>{usdPrice}</Price>
         </Box>
       </Flex>
