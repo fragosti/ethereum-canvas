@@ -40,6 +40,7 @@ class Canvas extends Component {
 export default styled(Canvas)`
   max-width: 1000px;
   max-height: 1000px;
+  padding: 0;
   height: 100%;
   width: 100%;
 `;

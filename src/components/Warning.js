@@ -9,12 +9,7 @@ import { Description, Title } from './Text';
 const Warning = ({ className, error }) => (
   <DismissableIsland className={className}>
     <Title> Oops! 😔 </Title>
-    <Description> 
-      Something has gone wrong!
-    </Description>
-    <Description mb='1em'> 
-      Here is the error if it helps:
-    </Description>
+    <Description mb='1em'>Something has gone wrong! </Description>
     <pre>
       {error}
     </pre>

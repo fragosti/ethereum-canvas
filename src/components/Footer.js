@@ -29,8 +29,7 @@ const Footer = ({ className }) => (
       <Box width={[1/3, 1/2]} my='auto'> 
         <Flex justify='space-evenly' wrap>
           <FooterLink to='faq'>FAQ</FooterLink>
-          <FooterLink to='howto'>HowTo</FooterLink>
-          <FooterLink to='TODO'>Contract</FooterLink>
+          <FooterLink href='https://etherscan.io/address/0x60c2dea4674d9ae6924869d6fb558cec698b1f7c' target='_blank'>Contract</FooterLink>
           <FooterLink href='https://github.com/fragosti/ethereum-canvas' target='_blank'>Source</FooterLink>
         </Flex>
       </Box>
